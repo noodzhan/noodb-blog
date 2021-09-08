@@ -1,0 +1,37 @@
+plugins {
+    id 'org.springframework.boot' version '2.4.5'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+group 'com.noodb'
+version '1.0.0'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'org.springframework.boot', name: 'spring-boot', version: '2.4.5'
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.25'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.5.2'
+    implementation group: 'com.baomidou', name: 'mybatis-plus-boot-starter', version: '3.4.3'
+    implementation group: 'org.mybatis', name: 'mybatis', version: '3.5.6'
+    implementation group: 'com.baomidou', name: 'mybatis-plus', version: '3.4.3'
+
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+task wrapper(type: Wrapper){
+    gradleVersion="7.1.1"
+}
+
+
+
+
+test {
+    useJUnitPlatform()
+}
