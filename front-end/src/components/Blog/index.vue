@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-tooltip placement="bottomLeft" title="编辑" >
-      <a-icon type="edit" style="position: fixed;right: 0;padding-right: 3vw;" @click="editMd"/>
+      <a-icon type="edit" style="position: fixed;right: 0;padding-right: 3vw;padding-top: 10px" @click="editMd"/>
     </a-tooltip>
     <div id="md" v-html="md"/>
   </div>

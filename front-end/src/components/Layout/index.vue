@@ -2,6 +2,7 @@
   <div class="noodb-layout">
     <a-layout>
       <NoodbHeader :is-show-search="isPCComponent"></NoodbHeader>
+<!--      <a-divider style="top: 64px;position: fixed;z-index: 1"></a-divider>-->
       <a-layout class="noodb-container">
         <a-layout-sider breakpoint="lg"
                         collapsed-width="0"
@@ -49,17 +50,11 @@ export default {
 </script>
 
 <style scoped>
-.noodb-logo{
-  display: inline-block;
-  cursor: pointer;
-  font-size: 2em;
-}
 .noodb-layout .ant-layout-sider{
-  padding: 0 2em;
+  padding: 0 1em;
 }
 .noodb-container{
-  position: relative;
-  top: 64px;
+  margin-top: 64px;
 }
 .noodb-layout .ant-layout-header{
   background: white;
@@ -69,12 +64,12 @@ export default {
 }
 .noodb-layout .ant-layout-content{
   background: white;
-  padding: 0 2em;
+  padding: 0 1em;
 }
 .noodb-layout .ant-layout-footer{
   text-align: center;
-  position: relative;
-  top: 64px;
 }
-
+>>> .ant-divider-horizontal{
+  margin: 0 0;
+}
 </style>

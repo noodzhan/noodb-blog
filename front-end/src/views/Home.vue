@@ -1,22 +1,26 @@
 <template>
   <NoodbLayout>
     <template v-slot:side>
-     <div style="display: flex;flex-direction: column">
-       <div>
-       </div>
-       <div>
-         <h4>推荐书籍</h4>
-         <div v-for="(item,index) in recommendBooks" :key="index" class="recommend-book" >
-           {{index+1}} 、
-           <a>{{item.name}}</a>
-         </div>
-       </div>
-     </div>
+      <div>
+        <a-card title="推荐文档" :bordered="false">
+          <div v-for="(item,index) in recommendBooks" :key="index" class="recommend-book">
+            <a>{{ item.name }}</a>
+          </div>
+        </a-card>
+        <a-card title="推荐书籍" :bordered="false">
+          <div v-for="(item,index) in recommendBooks" :key="index" class="recommend-book">
+            <a>{{ item.name }}</a>
+          </div>
+        </a-card>
+        <a-card title="捐赠支持" :bordered="false">
+          <img src="../asserts/img/payme.jpeg" width="100%" style="text-align: center">
+        </a-card>
+      </div>
     </template>
-    <template v-slot:content >
+    <template v-slot:content>
       <div v-for="(i,index) in blogs" :key="index" class="post" @click="clickOnArticle(i)">
-        <h3>{{index}} {{i.title}}</h3>
-        <span style="cursor: pointer;">{{i.content}}}</span>
+        <h3>{{ index }} {{ i.title }}</h3>
+        <span style="cursor: pointer;">{{ i.content }}}</span>
       </div>
     </template>
   </NoodbLayout>
@@ -25,6 +29,7 @@
 <script>
 import NoodbLayout from '@/components/Layout'
 import router from '@/router'
+
 export default {
   name: 'Home',
   components: {
@@ -75,10 +80,12 @@ export default {
   margin: 1vh 1vh 0 0;
   padding-right: 2vw;
 }
-.recommend-book{
+
+.recommend-book {
   padding-top: 5px;
 }
-.post:hover{
+
+.post:hover {
   background: #e5eaef;;
 }
 
