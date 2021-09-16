@@ -54,18 +54,16 @@ export default {
     const $vm = this
     const renderer = {
       heading (text, level, raw, slugger) {
-        // console.error(text)
-        // console.error(level)
         const node = {}
         node.label = text
         node.level = level
-        node.chrild = []
+        node.child = []
         if (level <= lastHeading) {
           $vm.tree.push(node)
         } else {
-          $vm.tree[$vm.tree.length - 1].chrild.push(node)
-          lastHeading = level
+          $vm.recursiveAppendChild($vm.tree[$vm.tree.length - 1], node)
         }
+        lastHeading = level
         if (this.options.headerIds) {
           return '<h' +
               level +
@@ -103,13 +101,19 @@ export default {
     this.md = Marked(this.md)
   },
   methods: {
+    // 递归的添加孩子
+    recursiveAppendChild (parent, child) {
+      if (typeof parent.child === 'undefined' || parent.child.length === 0) {
+        parent.child = child
+      } else {
+        if (parent.child.level < child.level) {
+          this.recursiveAppendChild(parent.child, child)
+        }
+      }
+    },
     editMd () {
       router.push('edit/' + this.articleId)
-    },
-    buildTree ($vm, node, lastNodeLevel) {
-
     }
-
   }
 }
 </script>
