@@ -3,17 +3,7 @@
     <template v-slot:side>
      <div style="padding-left: 20px" class="left-catalog">
        <a-anchor :offsetTop="70">
-         <a-anchor-link href="#components-anchor-demo-basic" title="Basic demo" />
-         <a-anchor-link href="#components-anchor-demo-static" title="Static demo" />
-         <a-anchor-link
-             href="#components-anchor-demo-basic"
-             title="Basic demo with Target"
-             target="_blank"
-         />
-         <a-anchor-link href="#API" title="API">
-           <a-anchor-link href="#Anchor-Props" title="Anchor Props" />
-           <a-anchor-link href="#FactoryBean" title="Link Props" />
-         </a-anchor-link>
+         <a-anchor-link v-for="(item,index) in titles" :href="'#'+item" :key="index" :title="item" />
        </a-anchor>
      </div>
     </template>
@@ -41,29 +31,21 @@ export default {
     return {
       md: '# 1 \n' +
           '## 1-2 \n' +
+          '## 1-2 \n' +
           '### 1-3 \n' +
           '# 2 \n' +
           '## 2-1\n',
       articleId: 1234,
-      tree: []
+      titles: []
     }
   },
   mounted () {
-    let lastHeading = 1
-    // const tree = []
     const $vm = this
     const renderer = {
       heading (text, level, raw, slugger) {
-        const node = {}
-        node.label = text
-        node.level = level
-        node.child = []
-        if (level <= lastHeading) {
-          $vm.tree.push(node)
-        } else {
-          $vm.recursiveAppendChild($vm.tree[$vm.tree.length - 1], node)
+        if (level === 1) {
+          $vm.titles.push(text)
         }
-        lastHeading = level
         if (this.options.headerIds) {
           return '<h' +
               level +
@@ -101,16 +83,6 @@ export default {
     this.md = Marked(this.md)
   },
   methods: {
-    // 递归的添加孩子
-    recursiveAppendChild (parent, child) {
-      if (typeof parent.child === 'undefined' || parent.child.length === 0) {
-        parent.child = child
-      } else {
-        if (parent.child.level < child.level) {
-          this.recursiveAppendChild(parent.child, child)
-        }
-      }
-    },
     editMd () {
       router.push('edit/' + this.articleId)
     }

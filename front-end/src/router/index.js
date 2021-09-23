@@ -10,9 +10,9 @@ Vue.use(VueRouter)
 const routers = [
   { path: '/', redirect: '/home' },
   { path: '/profile', component: Profile },
-  { path: '/blog', component: Article },
-  { path: '/home', component: Home },
-  { path: '/edit/*', component: Edit }
+  { path: '/blog/:blogId', component: Article },
+  { path: '/blog/edit/:blogId', component: Edit },
+  { path: '/home', component: Home }
 ]
 const router = new VueRouter({
   mode: 'history',
