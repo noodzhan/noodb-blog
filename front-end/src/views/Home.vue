@@ -18,19 +18,22 @@
       </div>
     </template>
     <template v-slot:content>
-      <a-list item-layout="vertical" size="large" :data-source="blogs"
-              >
-        <div class="load-more" @click="readMore">
-          <a slot="loadMore" href="javascript:void(0)">阅读更多</a>
-        </div>
-        <a-list-item slot="renderItem" slot-scope="item">
-          <a-list-item-meta
-              :description="item.summary"
-          >
-            <a slot="title" @click="clickOnArticle(item)">{{ item.title }}</a>
-          </a-list-item-meta>
-        </a-list-item>
-      </a-list>
+      <div>
+        <noodb-spin v-if="loading"></noodb-spin>
+        <a-list item-layout="vertical" size="large" :data-source="blogs"
+        >
+          <div class="load-more" @click="readMore">
+            <a slot="loadMore" href="javascript:void(0)">阅读更多</a>
+          </div>
+          <a-list-item slot="renderItem" slot-scope="item">
+            <a-list-item-meta
+                :description="item.summary"
+            >
+              <a slot="title" @click="clickOnArticle(item)">{{ item.title }}</a>
+            </a-list-item-meta>
+          </a-list-item>
+        </a-list>
+      </div>
     </template>
   </NoodbLayout>
 </template>
@@ -39,11 +42,13 @@
 import NoodbLayout from '@/components/Layout'
 import router from '@/router'
 import HomeService from '@/asserts/js/homeService'
+import NoodbSpin from '@/components/Spin'
 
 export default {
   name: 'Home',
   components: {
-    NoodbLayout
+    NoodbLayout,
+    NoodbSpin
   },
   data: function () {
     return {
@@ -58,12 +63,13 @@ export default {
   },
   methods: {
     clickOnArticle (article) {
-      console.log(article)
       // 跳转到文章详情页面，并且通过参数传递文章id
-      router.push('/blog/' + article.id)
-    },
-    handleInfiniteOnLoad () {
-      console.log('loading')
+      router.push({
+        path: '/blog/' + article.id,
+        params: {
+          articleId: article.id
+        }
+      })
     },
     readMore () {
       const $vm = this
@@ -81,12 +87,13 @@ export default {
     }
 
   },
-  mounted () {
+  beforeMount () {
     const $vm = this
     this.api.getAllArticleSummary(this.pageNum, this.pageSize, (res) => {
       if (res.code === 0) {
         $vm.blogs = res.data.records
       }
+      $vm.loading = false
     })
   }
 }

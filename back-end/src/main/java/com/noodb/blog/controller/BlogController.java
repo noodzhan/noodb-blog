@@ -23,13 +23,16 @@ public class BlogController {
     ArticleService articleService;
 
     @GetMapping("/all")
-    public R<Article> findAllArticleByPage(@RequestParam("pageNum") Integer pageNum,@RequestParam(value = "pageSize",defaultValue = "15")  Integer pageSize){
-        Page<Article> articlePage = new Page<>(pageNum,pageSize);
-        articleService.page(articlePage);
+    public R<Page> findAllArticleByPage(@RequestParam("pageNum") Integer pageNum, @RequestParam(value = "pageSize", defaultValue = "15") Integer pageSize) {
+        Page<Article> articlePage = new Page<>(pageNum, pageSize);
+        articleService.lambdaQuery().select(Article::getId,Article::getTitle,Article::getSummary).page(articlePage);
         return R.success(articlePage);
     }
 
-
+    @GetMapping("/one")
+    public R<Article> findArticleById(@RequestParam("id") Long id){
+        return R.success(articleService.lambdaQuery().eq(Article::getId, id).one());
+    }
 
 
 }
