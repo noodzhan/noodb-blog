@@ -11,7 +11,7 @@ const routers = [
   { path: '/', redirect: '/home' },
   { path: '/profile', component: Profile },
   { path: '/blog/:articleId', component: Article },
-  { path: '/blog/edit/:blogId', component: Edit },
+  { path: '/blog/edit/:articleId', component: Edit },
   { path: '/home', component: Home }
 ]
 const router = new VueRouter({

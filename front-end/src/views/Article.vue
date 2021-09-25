@@ -88,6 +88,7 @@ export default {
 
     }).then(res => {
       if (res.data.code === 0) {
+        this.articleId = res.data.data.id
         this.md = Marked(res.data.data.content)
       } else {
         this.$notification.warning({ message: '系统错误' })
@@ -98,7 +99,12 @@ export default {
   },
   methods: {
     editMd () {
-      router.push('edit/' + this.articleId)
+      router.push({
+        path: 'edit/' + this.articleId,
+        params: {
+          articleId: this.articleId
+        }
+      })
     }
   }
 }
