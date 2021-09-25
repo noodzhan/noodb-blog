@@ -2,14 +2,14 @@
   <div class="noodb-layout">
     <a-layout>
       <NoodbHeader :is-show-search="isPCComponent"></NoodbHeader>
-<!--      <a-divider style="top: 64px;position: fixed;z-index: 1"></a-divider>-->
+      <!--      <a-divider style="top: 64px;position: fixed;z-index: 1"></a-divider>-->
       <a-layout class="noodb-container">
         <a-layout-sider breakpoint="lg"
                         collapsed-width="0"
                         :trigger=null theme="light" @breakpoint="breakpoint" v-show="isPCComponent">
           <slot name="side">侧边区</slot>
         </a-layout-sider>
-        <a-layout-content>
+        <a-layout-content :class="{'phone-content':!isPCComponent}">
           <slot name="content">内容区</slot>
         </a-layout-content>
       </a-layout>
@@ -23,6 +23,7 @@
 <script>
 import router from '@/router'
 import NoodbHeader from '@/components/Header'
+
 export default {
   name: 'NoodbLayout',
   components: {
@@ -50,26 +51,37 @@ export default {
 </script>
 
 <style scoped>
-.noodb-layout .ant-layout-sider{
+.noodb-layout .ant-layout-sider {
   padding: 0 1em;
+  position: fixed;
+  height: 100vh;
 }
-.noodb-container{
+
+.noodb-container {
   margin-top: 64px;
 }
-.noodb-layout .ant-layout-header{
+
+.noodb-layout .ant-layout-header {
   background: white;
   position: fixed;
   width: 100%;
   z-index: 1;
 }
-.noodb-layout .ant-layout-content{
+.phone-content{
+  margin-left: 0px !important;
+}
+
+.noodb-layout .ant-layout-content {
   background: white;
   padding: 0 1em;
+  margin-left: 200px;
 }
-.noodb-layout .ant-layout-footer{
+
+.noodb-layout .ant-layout-footer {
   text-align: center;
 }
->>> .ant-divider-horizontal{
+
+>>> .ant-divider-horizontal {
   margin: 0 0;
 }
 </style>

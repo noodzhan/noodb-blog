@@ -5,7 +5,7 @@ import com.noodb.blog.entity.Article;
 import com.noodb.blog.service.ArticleService;
 import com.noodb.blog.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,10 +22,10 @@ public class BlogController {
     @Autowired
     ArticleService articleService;
 
-    @PostMapping("/")
+    @GetMapping("/all")
     public R<Article> findAllArticleByPage(@RequestParam("pageNum") Integer pageNum,@RequestParam(value = "pageSize",defaultValue = "15")  Integer pageSize){
-        Page<Article> articlePage = new Page<>();
-        articlePage.setRecords(articleService.list());
+        Page<Article> articlePage = new Page<>(pageNum,pageSize);
+        articleService.page(articlePage);
         return R.success(articlePage);
     }
 

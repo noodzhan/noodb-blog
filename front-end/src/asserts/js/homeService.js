@@ -1,10 +1,21 @@
 /**
  * 所有Home.vue发出的请求业务
  */
-class HomeService {
-  getAllArticleSummary ($vm) {
-    $vm.$http({
-      url: ''
+export default class HomeService {
+  constructor ($vm) {
+    this.$vm = $vm
+  }
+
+  getAllArticleSummary (pageNum, pageSize, callBack) {
+    this.$vm.$http({
+      url: this.$vm.$appUrl + this.$vm.autoPrefix() + '/article/all',
+      method: 'GET',
+      params: {
+        pageNum: pageNum || 1,
+        pageSize: pageSize || 15
+      }
+    }).then(res => {
+      callBack(res.data)
     })
   }
 }

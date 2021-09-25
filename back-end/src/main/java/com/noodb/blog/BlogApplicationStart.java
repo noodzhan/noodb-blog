@@ -1,5 +1,6 @@
 package com.noodb.blog;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -10,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @since 2021/8/8 5:24 下午
  */
 @SpringBootApplication
+@MapperScan("com.noodb.blog.mapper")
 public class BlogApplicationStart {
     public static void main(String[] args) {
         SpringApplication.run(BlogApplicationStart.class,args);

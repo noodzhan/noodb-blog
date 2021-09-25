@@ -11,6 +11,14 @@ Vue.config.productionTip = false
 Vue.use(Antd)
 Vue.use(mavonEditor)
 Vue.prototype.$http = axios
+Vue.prototype.$appUrl = process.env.VUE_APP_URL
+Vue.prototype.autoPrefix = function () {
+  if (process.env.NODE_ENV === 'development') {
+    return '/api'
+  } else if (process.env.NODE_ENV === 'production') {
+    return ''
+  }
+}
 new Vue({
   router,
   render: h => h(App)
