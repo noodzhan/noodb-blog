@@ -73,7 +73,7 @@ export default {
 
 .noodb-layout .ant-layout-content {
   background: white;
-  padding: 0 1em;
+  padding: 0 2em;
   margin-left: 200px;
 }
 @media screen and (min-width: 960px){

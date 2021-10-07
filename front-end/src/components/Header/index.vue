@@ -24,6 +24,11 @@ export default {
 </script>
 
 <style scoped>
+@media screen and (max-width: 480px){
+  .ant-layout-header{
+    padding: 0 20px !important;
+  }
+}
 .noodb-logo {
   display: inline-block;
   cursor: pointer;
