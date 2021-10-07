@@ -23,7 +23,7 @@
 import NoodbLayout from '@/components/Layout'
 import Marked from 'marked'
 import HighLight from 'highlight.js'
-// import router from '@/router'
+import router from '@/router'
 import NoodbSpin from '@/components/Spin'
 import NoodbLogin from '@/views/Login.vue'
 export default {
@@ -103,13 +103,13 @@ export default {
   methods: {
     editMd () {
       // 1. 判断用户是否登录
-      this.isOpenLoginModal = true
-      // router.push({
-      //   path: 'edit/' + this.articleId,
-      //   params: {
-      //     articleId: this.articleId
-      //   }
-      // })
+      // this.isOpenLoginModal = true
+      router.push({
+        path: 'edit/' + this.articleId,
+        params: {
+          articleId: this.articleId
+        }
+      })
     },
     handleCancel () {
       this.isOpenLoginModal = false
