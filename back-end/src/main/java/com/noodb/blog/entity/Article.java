@@ -1,5 +1,7 @@
 package com.noodb.blog.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.io.Serializable;
 
 /**
@@ -13,6 +15,7 @@ public class Article extends CommonField implements Serializable {
     /**
     * 主键
     */
+    @TableId
     private Long id;
     /**
     * 分类id

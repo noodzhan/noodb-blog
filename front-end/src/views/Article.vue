@@ -9,6 +9,7 @@
     </template>
     <template v-slot:content>
       <div>
+        <noodb-login :visible="isOpenLoginModal" @cancel="handleCancel"></noodb-login>
         <a-tooltip placement="bottomLeft" title="编辑" >
           <a-icon type="edit" style="position: fixed;right: 0;padding-right: 3vw;padding-top: 10px" @click="editMd"/>
         </a-tooltip>
@@ -22,21 +23,23 @@
 import NoodbLayout from '@/components/Layout'
 import Marked from 'marked'
 import HighLight from 'highlight.js'
-import router from '@/router'
+// import router from '@/router'
 import NoodbSpin from '@/components/Spin'
-
+import NoodbLogin from '@/views/Login.vue'
 export default {
   name: 'Article',
   components: {
     NoodbLayout,
-    NoodbSpin
+    NoodbSpin,
+    NoodbLogin
   },
   data: function () {
     return {
       loading: true,
       md: '',
       articleId: '',
-      titles: []
+      titles: [],
+      isOpenLoginModal: false
     }
   },
   beforeMount () {
@@ -99,12 +102,17 @@ export default {
   },
   methods: {
     editMd () {
-      router.push({
-        path: 'edit/' + this.articleId,
-        params: {
-          articleId: this.articleId
-        }
-      })
+      // 1. 判断用户是否登录
+      this.isOpenLoginModal = true
+      // router.push({
+      //   path: 'edit/' + this.articleId,
+      //   params: {
+      //     articleId: this.articleId
+      //   }
+      // })
+    },
+    handleCancel () {
+      this.isOpenLoginModal = false
     }
   }
 }

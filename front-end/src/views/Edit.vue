@@ -4,7 +4,8 @@
     <noodb-spin v-if="loading"></noodb-spin>
     <div class="edit-title">
       <span class="edit-title-span">  标题：</span>
-      <a-input :value="article.title" style="flex: 2"></a-input>
+      <a-input v-model="article.title" style="flex: 2"></a-input>
+      <a-button type="primary" style="margin:0  20px" @click="save">保存</a-button>
     </div>
     <mavon-editor v-model="article.content" ref="mavonEditor" :autofocus="true" :scroll-style="true"
                   style="height: 80vh" :toolbars="toolbars" :subfield="!isPhoneScreen" :default-open="isPhoneScreen?'edit':''"></mavon-editor>
@@ -98,6 +99,25 @@ export default {
       }
       this.loading = false
     })
+  },
+  methods: {
+    save () {
+      console.log('save')
+      const $vm = this
+      this.$http({
+        url: $vm.$appUrl + $vm.autoPrefix() + '/article/edit',
+        method: 'POST',
+        data: $vm.article
+      }).then((res) => {
+        if (res.data.code === 0) {
+          $vm.$notification.info({ message: '保存成功' })
+        } else {
+          $vm.$notification.warning({ message: '保存失败' })
+        }
+      }).catch(() => {
+        $vm.$notification.error({ message: '系统错误' })
+      })
+    }
   }
 }
 </script>

@@ -5,10 +5,7 @@ import com.noodb.blog.entity.Article;
 import com.noodb.blog.service.ArticleService;
 import com.noodb.blog.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 博客的增删改查接口
@@ -25,14 +22,20 @@ public class BlogController {
     @GetMapping("/all")
     public R<Page> findAllArticleByPage(@RequestParam("pageNum") Integer pageNum, @RequestParam(value = "pageSize", defaultValue = "15") Integer pageSize) {
         Page<Article> articlePage = new Page<>(pageNum, pageSize);
-        articleService.lambdaQuery().select(Article::getId,Article::getTitle,Article::getSummary).page(articlePage);
+        articleService.lambdaQuery().select(Article::getId, Article::getTitle, Article::getSummary).page(articlePage);
         return R.success(articlePage);
     }
 
     @GetMapping("/one")
-    public R<Article> findArticleById(@RequestParam("id") Long id){
+    public R<Article> findArticleById(@RequestParam("id") Long id) {
         return R.success(articleService.lambdaQuery().eq(Article::getId, id).one());
     }
 
+    @PostMapping("/edit")
+    public R<Boolean> editOrInsertArticle(@RequestBody Article article) {
+        article.setSummary(article.getContent().substring(0, Math.min(article.getContent().length(), 250)).replace('#', ' ').replace('*', ' ') + "...");
+        boolean save = articleService.saveOrUpdate(article);
+        return R.success(save);
+    }
 
 }

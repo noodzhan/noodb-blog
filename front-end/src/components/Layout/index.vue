@@ -9,7 +9,7 @@
                         :trigger=null theme="light" @breakpoint="breakpoint" v-show="isPCComponent">
           <slot name="side">侧边区</slot>
         </a-layout-sider>
-        <a-layout-content :class="{'phone-content':!isPCComponent}">
+        <a-layout-content :class="{'phone-content':!isPCComponent}" class="noodb-content">
           <slot name="content">内容区</slot>
         </a-layout-content>
       </a-layout>
@@ -76,7 +76,11 @@ export default {
   padding: 0 1em;
   margin-left: 200px;
 }
-
+@media screen and (min-width: 960px){
+  .noodb-content{
+    padding: 0 10% !important;
+  }
+}
 .noodb-layout .ant-layout-footer {
   text-align: center;
 }

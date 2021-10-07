@@ -1,5 +1,5 @@
 <template>
-  <a-spin class="loading" size="large"></a-spin>
+  <a-spin class="loading" size="large" tip="加载中"></a-spin>
 </template>
 <script>
 export default {
