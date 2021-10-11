@@ -39,7 +39,8 @@ export default {
       md: '',
       articleId: '',
       titles: [],
-      isOpenLoginModal: false
+      isOpenLoginModal: false,
+      travelNodeList: []
     }
   },
   beforeMount () {
@@ -47,6 +48,7 @@ export default {
     const $vm = this
     const renderer = {
       heading (text, level, raw, slugger) {
+        $vm.travelNodeList.push({ title: text, level: level, raw: raw })
         if (level <= 4) {
           $vm.titles.push(text)
         }
@@ -113,6 +115,21 @@ export default {
     },
     handleCancel () {
       this.isOpenLoginModal = false
+    },
+    buildCatalogTree (lastNode, node) {
+      if (lastNode.level < node.level) {
+        if (typeof lastNode.child === 'undefined') {
+          lastNode.child = []
+        }
+        node.pNode = lastNode
+        lastNode.child.push(node)
+      } else if (lastNode.level === node.level) {
+        if (typeof lastNode.pNode !== 'undefined') {
+          this.buildCatalogTree(lastNode.pNode, node)
+        }
+      } else {
+        this.buildCatalogTree()
+      }
     }
   }
 }

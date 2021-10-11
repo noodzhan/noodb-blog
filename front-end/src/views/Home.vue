@@ -106,6 +106,9 @@ export default {
 
 .recommend-book {
   padding-top: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space:nowrap;
 }
 
 .post:hover {

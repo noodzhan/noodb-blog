@@ -86,10 +86,16 @@ export default {
     })
   },
   beforeMount () {
+    const id = this.$route.params.articleId
+    // 新增博客
+    if (id === 'new') {
+      this.loading = false
+      return
+    }
     this.$http({
       url: this.$appUrl + this.autoPrefix() + '/article/one',
       method: 'GET',
-      params: { id: this.$route.params.articleId }
+      params: { id: id }
 
     }).then(res => {
       if (res.data.code === 0) {
