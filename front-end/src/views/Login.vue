@@ -25,15 +25,16 @@
 <script>
 export default {
   name: 'NoodbLogin',
-  props: {
-    visible: Boolean
-  },
+
   data: function () {
     return {
       formObj: {}
     }
   },
   computed: {
+    visible: function () {
+      return this.$store.state.openLoginModal
+    }
   },
   methods: {
     handleCancel (event) {

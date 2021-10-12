@@ -4,10 +4,10 @@
       <img src="../../asserts/img/logo.png" height="70%" @click="clickLogo">
       <a-input-search style="width: 200px;margin-left: auto" v-show="isShowSearch"></a-input-search>
 
-      <a-dropdown style="padding-left: 50px">
+      <a-dropdown style="padding-left: 50px" v-if="isShowPlus" :class="{'mobile-plus':!isShowSearch}">
         <a-icon type="plus"></a-icon>
         <a-menu mode="horizontal"  slot="overlay">
-          <a-menu-item><a href="blog/edit/new">写文章</a></a-menu-item>
+          <a-menu-item><a href="/blog/edit/new">写文章</a></a-menu-item>
         </a-menu>
       </a-dropdown>
 
@@ -26,6 +26,14 @@ export default {
   methods: {
     clickLogo () {
       router.push('/')
+    }
+  },
+  computed: {
+    isShowPlus () {
+      if (this.$route.path.includes('blog/edit/new')) {
+        return false
+      }
+      return true
     }
   }
 }
@@ -49,6 +57,10 @@ export default {
   position: fixed;
   width: 100%;
   z-index: 1;
+}
+
+.mobile-plus{
+  margin-left: auto;
 }
 
 >>> .ant-menu-horizontal {

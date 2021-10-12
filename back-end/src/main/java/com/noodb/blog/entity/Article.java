@@ -1,6 +1,8 @@
 package com.noodb.blog.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import java.io.Serializable;
 
@@ -16,6 +18,7 @@ public class Article extends CommonField implements Serializable {
     * 主键
     */
     @TableId
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
     /**
     * 分类id

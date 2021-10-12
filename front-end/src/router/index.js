@@ -20,4 +20,18 @@ const router = new VueRouter({
   scrollBehavior: () => ({ y: 0 }),
   routes: routers
 })
+const mustLoginUrl = ['blog/edit']
+router.beforeEach((to, from, next) => {
+  let forwardLogin = false
+  mustLoginUrl.forEach(url => {
+    if (to.path.includes(url)) {
+      forwardLogin = true
+    }
+  })
+  if (forwardLogin) {
+    next()
+  } else {
+    next()
+  }
+})
 export default router

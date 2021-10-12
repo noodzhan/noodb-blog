@@ -9,7 +9,7 @@
     </template>
     <template v-slot:content>
       <div>
-        <noodb-login :visible="isOpenLoginModal" @cancel="handleCancel"></noodb-login>
+        <noodb-login  @cancel="handleCancel"></noodb-login>
         <a-tooltip placement="bottomLeft" title="编辑" >
           <a-icon type="edit" style="position: fixed;right: 0;padding-right: 3vw;padding-top: 10px" @click="editMd"/>
         </a-tooltip>
@@ -39,7 +39,6 @@ export default {
       md: '',
       articleId: '',
       titles: [],
-      isOpenLoginModal: false,
       travelNodeList: []
     }
   },
@@ -104,8 +103,6 @@ export default {
   },
   methods: {
     editMd () {
-      // 1. 判断用户是否登录
-      // this.isOpenLoginModal = true
       router.push({
         path: 'edit/' + this.articleId,
         params: {
