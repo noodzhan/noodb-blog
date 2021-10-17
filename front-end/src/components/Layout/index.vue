@@ -67,7 +67,8 @@ export default {
   width: 100%;
   z-index: 1;
 }
-.phone-content{
+
+.phone-content {
   margin-left: 0px !important;
 }
 
@@ -76,11 +77,13 @@ export default {
   padding: 0 2em;
   margin-left: 200px;
 }
-@media screen and (min-width: 960px){
-  .noodb-content{
+
+@media screen and (min-width: 960px) {
+  .noodb-content {
     padding: 0 10% !important;
   }
 }
+
 .noodb-layout .ant-layout-footer {
   text-align: center;
 }

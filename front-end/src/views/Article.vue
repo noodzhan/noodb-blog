@@ -1,16 +1,15 @@
 <template>
   <NoodbLayout>
     <template v-slot:side>
-     <div style="padding-left: 20px" class="left-catalog">
-       <a-anchor :offsetTop="70">
-         <a-anchor-link v-for="(item,index) in titles" :href="'#'+item" :key="index" :title="item" />
-       </a-anchor>
-     </div>
+      <div style="padding-left: 20px" class="left-catalog">
+        <a-anchor :offsetTop="70">
+          <a-anchor-link v-for="(item,index) in titles" :href="'#'+item" :key="index" :title="item"/>
+        </a-anchor>
+      </div>
     </template>
     <template v-slot:content>
       <div>
-        <noodb-login  @cancel="handleCancel"></noodb-login>
-        <a-tooltip placement="bottomLeft" title="编辑" >
+        <a-tooltip placement="bottomLeft" title="编辑">
           <a-icon type="edit" style="position: fixed;right: 0;padding-right: 3vw;padding-top: 10px" @click="editMd"/>
         </a-tooltip>
         <div id="md" v-html="md"/>
@@ -25,13 +24,12 @@ import Marked from 'marked'
 import HighLight from 'highlight.js'
 import router from '@/router'
 import NoodbSpin from '@/components/Spin'
-import NoodbLogin from '@/views/Login.vue'
+
 export default {
   name: 'Article',
   components: {
     NoodbLayout,
-    NoodbSpin,
-    NoodbLogin
+    NoodbSpin
   },
   data: function () {
     return {
@@ -132,10 +130,11 @@ export default {
 }
 </script>
 <style scoped>
- .left-catalog >>>.ant-affix{
+.left-catalog >>> .ant-affix {
   top: 64px
 }
- #md{
-   padding-right: 3vw;
- }
+
+#md {
+  padding-right: 3vw;
+}
 </style>

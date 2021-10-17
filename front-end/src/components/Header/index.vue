@@ -6,8 +6,8 @@
 
       <a-dropdown style="padding-left: 50px" v-if="isShowPlus" :class="{'mobile-plus':!isShowSearch}">
         <a-icon type="plus"></a-icon>
-        <a-menu mode="horizontal"  slot="overlay">
-          <a-menu-item><a href="/blog/edit/new">写文章</a></a-menu-item>
+        <a-menu mode="horizontal" slot="overlay">
+          <a-menu-item><a href="javascript:void(0)" @click="clickWriteArticle">写文章</a></a-menu-item>
         </a-menu>
       </a-dropdown>
 
@@ -26,7 +26,11 @@ export default {
   methods: {
     clickLogo () {
       router.push('/')
+    },
+    clickWriteArticle () {
+      router.push('/blog/edit/new')
     }
+
   },
   computed: {
     isShowPlus () {
@@ -59,7 +63,7 @@ export default {
   z-index: 1;
 }
 
-.mobile-plus{
+.mobile-plus {
   margin-left: auto;
 }
 

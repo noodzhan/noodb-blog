@@ -7,6 +7,8 @@ import '../public/assert/style/public.css'
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import axios from 'axios'
+import store from '@/store'
+
 Vue.config.productionTip = false
 Vue.use(Antd)
 Vue.use(mavonEditor)
@@ -22,5 +24,6 @@ Vue.prototype.autoPrefix = function () {
 }
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')

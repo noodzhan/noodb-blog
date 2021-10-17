@@ -4,11 +4,14 @@ import Home from '@/views/Home'
 import Profile from '@/views/Profile'
 import Article from '@/views/Article'
 import Edit from '@/views/Edit'
+import Login from '@/views/Login'
+import store from '@/store'
 
 Vue.use(VueRouter)
 
 const routers = [
   { path: '/', redirect: '/home' },
+  { path: '/login', component: Login },
   { path: '/profile', component: Profile },
   { path: '/blog/:articleId', component: Article },
   { path: '/blog/edit/:articleId', component: Edit },
@@ -22,6 +25,7 @@ const router = new VueRouter({
 })
 const mustLoginUrl = ['blog/edit']
 router.beforeEach((to, from, next) => {
+  // nextHomeIfCondition(to, from, next)
   let forwardLogin = false
   mustLoginUrl.forEach(url => {
     if (to.path.includes(url)) {
@@ -29,9 +33,32 @@ router.beforeEach((to, from, next) => {
     }
   })
   if (forwardLogin) {
-    next()
+    if (store.state.isLogin) {
+      next()
+    } else {
+      next('/login')
+    }
   } else {
     next()
   }
 })
+
+/**
+ * 判断是否跳转到首页
+ * @param to
+ * @param from
+ * @param next
+ */
+// function nextHomeIfCondition (to, from, next) {
+//   let isIllegalRoute = false
+//   routers.forEach(item => {
+//     if (!to.path.includes(item.path)) {
+//       isIllegalRoute = true
+//     }
+//   })
+//   if (isIllegalRoute) {
+//     next('/')
+//   }
+// }
+
 export default router

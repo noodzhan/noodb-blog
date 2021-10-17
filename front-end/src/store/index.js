@@ -5,11 +5,15 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    openLoginModal: false
+    isLogin: false,
+    userInfo: {}
   },
   mutations: {
-    notifyOpenLoginModal: state => {
-      state.openLoginModal = true
+    setLoginFlag: (state, payload) => {
+      state.isLogin = payload
+    },
+    setUserInfo: (state, payload) => {
+      state.userInfo = payload
     }
   }
 })
