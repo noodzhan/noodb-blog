@@ -8,7 +8,11 @@
       <a-button type="primary" style="margin:0  20px" @click="save">保存</a-button>
     </div>
     <mavon-editor v-model="article.content" ref="mavonEditor" :autofocus="true" :scroll-style="true"
-                  style="height: 80vh" :toolbars="toolbars" :subfield="!isPhoneScreen" :default-open="isPhoneScreen?'edit':''"></mavon-editor>
+                  style="height: 80vh" :toolbars="toolbars" :subfield="!isPhoneScreen"
+                  :default-open="isPhoneScreen?'edit':''"
+                  @imgAdd="onImgAdd" @imgDel="onImgDel"
+    >
+    </mavon-editor>
   </div>
 </template>
 <script>
@@ -16,6 +20,7 @@ import NoodbHeader from '@/components/Header'
 import 'highlight.js/styles/github.css'
 import { isPhoneScreen } from '../asserts/js/utils'
 import NoodbSpin from '@/components/Spin'
+import EditArticleService from '@/asserts/js/eidtArticle'
 
 export default {
   name: 'Edit',
@@ -25,7 +30,8 @@ export default {
       loading: true,
       isShowSearch: false,
       article: {},
-      isPhoneScreen: false
+      isPhoneScreen: false,
+      editArticleService: new EditArticleService(this)
     }
   },
   computed: {
@@ -123,6 +129,15 @@ export default {
       }).catch(() => {
         $vm.$notification.error({ message: '系统错误' })
       })
+    },
+    onImgAdd (pos, file) {
+      console.log(pos)
+      console.log(file)
+      this.editArticleService.uploadImage(file, this.article.id)
+    },
+    onImgDel (pos, file) {
+      console.log('del' + pos)
+      console.log(file)
     }
   }
 }
