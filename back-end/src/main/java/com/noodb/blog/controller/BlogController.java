@@ -1,12 +1,14 @@
 package com.noodb.blog.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.noodb.blog.constant.NoodbConstant;
 import com.noodb.blog.entity.Article;
 import com.noodb.blog.entity.ArticleImages;
 import com.noodb.blog.service.ArticleImagesService;
 import com.noodb.blog.service.ArticleService;
 import com.noodb.blog.util.FileUtils;
 import com.noodb.blog.util.R;
+import com.noodb.blog.vo.UploadImageVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -59,16 +61,18 @@ public class BlogController {
   }
 
   @PostMapping("/img")
-  public R<Boolean> uploadImage(
+  public R<UploadImageVO> uploadImage(
       @RequestPart("file") MultipartFile file,
       @RequestPart("articleImages") ArticleImages articleImages) {
-
-    ArticleImages result = new ArticleImages();
+    UploadImageVO result = new UploadImageVO();
     BeanUtils.copyProperties(articleImages, result);
-    result.setImageName(file.getName());
-    result.setImageType(file.getContentType());
     String absoluteFileName = FileUtils.generateFileByMultipartFile(file, filePath);
+    result.setImageName(FileUtils.getFileNameFromAbsolutePath(absoluteFileName));
+    result.setImageType(file.getContentType());
     result.setSystemUrl(absoluteFileName);
-    return null;
+    result.setFrontUrl(
+        NoodbConstant.resourceUrlPrefix + FileUtils.getFileNameFromAbsolutePath(absoluteFileName));
+    articleImagesService.save(result);
+    return R.success(result);
   }
 }

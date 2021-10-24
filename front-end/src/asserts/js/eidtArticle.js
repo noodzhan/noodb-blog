@@ -3,7 +3,7 @@ export default class EditArticleService {
     this.$vm = $vm
   }
 
-  uploadImage (file, articleId) {
+  uploadImage (file, articleId, successFn, errorFn) {
     const formData = new FormData()
     const articleImage = {}
     articleImage.articleId = articleId
@@ -15,7 +15,9 @@ export default class EditArticleService {
       method: 'post',
       data: formData
     }).then(resp => {
-      console.log(resp)
+      successFn(resp.data)
+    }).catch(error => {
+      errorFn(error)
     })
   }
 }

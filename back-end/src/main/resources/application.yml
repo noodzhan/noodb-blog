@@ -38,7 +38,7 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 logging:
   level:
-    com.noodb.blog.mapper: debug
+    com.noodb.blog.mapper: info
 article:
   imagePath:
     /Users/noodzhan/IdeaProjects/noodb/back-end/build/
