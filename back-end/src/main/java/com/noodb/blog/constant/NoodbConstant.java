@@ -7,5 +7,5 @@ package com.noodb.blog.constant;
  * @since 2021/10/22 9:38 下午
  */
 public class NoodbConstant {
-  public static final String resourceUrlPrefix = "www.noodb.com/resource/";
+  public static final String resourceUrlPrefix = "https://www.noodb.com/resource/";
 }
