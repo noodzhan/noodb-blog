@@ -14,6 +14,11 @@ Vue.use(Antd)
 Vue.use(mavonEditor)
 Vue.prototype.$http = axios
 Vue.prototype.$appUrl = process.env.NODE_ENV === 'development' ? process.env.VUE_APP_URL : ''
+Vue.prototype.$notification.config({
+  placement: 'topRight',
+  top: 70,
+  duration: 3
+})
 
 Vue.prototype.autoPrefix = function () {
   if (process.env.NODE_ENV === 'development') {

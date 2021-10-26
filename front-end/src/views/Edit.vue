@@ -32,7 +32,8 @@ export default {
       isShowSearch: false,
       article: {},
       isPhoneScreen: false,
-      editArticleService: new EditArticleService(this)
+      editArticleService: new EditArticleService(this),
+      isInsertPage: false
     }
   },
   computed: {
@@ -56,6 +57,7 @@ export default {
     // 新增博客
     if (id === 'new') {
       this.loading = false
+      this.isInsertPage = true
       return
     }
     this.$http({
@@ -81,12 +83,40 @@ export default {
         data: $vm.article
       }).then((res) => {
         if (res.data.code === 0) {
-          $vm.$notification.info({ message: '保存成功' })
+          if ($vm.isInsertPage) {
+            $vm.jumpToEditPage(res.data.data)
+          }
+          const href = '/blog/' + res.data.data
+          $vm.$notification.info({
+            message: h => {
+              return h('a', {
+                props: { href: href },
+                on: {
+                  click: () => {
+                    this.$router.push({
+                      path: '/blog/' + res.data.data,
+                      params: {
+                        articleId: res.data.data
+                      }
+                    })
+                  }
+                }
+              }, '查看文章')
+            }
+          })
         } else {
           $vm.$notification.warning({ message: '保存失败' })
         }
       }).catch(() => {
         $vm.$notification.error({ message: '系统错误' })
+      })
+    },
+    jumpToEditPage (id) {
+      this.$router.push({
+        path: '/blog/edit/' + id,
+        params: {
+          articleId: id
+        }
       })
     },
     onImgAdd (pos, file) {

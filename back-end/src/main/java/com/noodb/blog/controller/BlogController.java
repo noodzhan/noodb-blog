@@ -48,7 +48,7 @@ public class BlogController {
   }
 
   @PostMapping("/edit")
-  public R<Boolean> editOrInsertArticle(@RequestBody Article article) {
+  public R<Long> editOrInsertArticle(@RequestBody Article article) {
     article.setSummary(
         article
                 .getContent()
@@ -57,7 +57,7 @@ public class BlogController {
                 .replace('*', ' ')
             + "...");
     boolean save = articleService.saveOrUpdate(article);
-    return R.success(save);
+    return R.success(article.getId());
   }
 
   @PostMapping("/img")
