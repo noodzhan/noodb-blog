@@ -24,6 +24,7 @@ import Marked from 'marked'
 import HighLight from 'highlight.js'
 import router from '@/router'
 import NoodbSpin from '@/components/Spin'
+import { cleanUrl } from 'marked/src/helpers'
 
 export default {
   name: 'Article',
@@ -63,6 +64,23 @@ export default {
         }
         // ignore IDs
         return '<h' + level + '>' + text + '</h' + level + '>\n'
+      },
+
+      // 重写image方法
+      image (href, title, text) {
+        href = cleanUrl(this.options.sanitize, this.options.baseUrl, href)
+        if (href === null) {
+          return text
+        }
+
+        let out = '<img src="' + href + '" alt="' + text + '"'
+        if (title) {
+          out += ' title="' + title + '"'
+        }
+        const width = "style='width:100%'"
+        out += width
+        out += this.options.xhtml ? '/>' : '>'
+        return out
       }
     }
     Marked.use({ renderer })
