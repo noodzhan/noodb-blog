@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
   @PostMapping("/login")
   public R<LoginVO> login(@Validated @RequestBody User user) {
-    if (user.getUsername().equals("noodzhan") && user.getPassword().equals("19970717.cf")) {
+    if (user.getUsername().equals("noodzhan") && user.getPassword().equals("noodzhan")) {
       LoginVO loginVO = new LoginVO();
       loginVO.setUsername("noodzhan");
       loginVO.setToken(JwtUtils.genToken(user));
