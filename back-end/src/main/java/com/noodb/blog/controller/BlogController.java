@@ -48,16 +48,10 @@ public class BlogController {
   }
 
   @PostMapping("/edit")
-  public R<Long> editOrInsertArticle(@RequestBody Article article) {
-    article.setSummary(
-        article
-                .getContent()
-                .substring(0, Math.min(article.getContent().length(), 250))
-                .replace('#', ' ')
-                .replace('*', ' ')
-            + "...");
-    boolean save = articleService.saveOrUpdate(article);
-    return R.success(article.getId());
+  public R<String> editOrInsertArticle(@RequestBody Article article) {
+    article.setSummary(articleService.extractSummaryHandle(article.getContent()));
+    articleService.saveOrUpdate(article);
+    return R.success(article.getId().toString());
   }
 
   @PostMapping("/img")

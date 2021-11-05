@@ -10,4 +10,12 @@ import com.noodb.blog.entity.Article;
  * @since 2021-08-14 20:16:49
  */
 public interface ArticleService extends IService<Article> {
+
+  /**
+   * 提取Summary
+   *
+   * @param content
+   * @return
+   */
+  String extractSummaryHandle(String content);
 }
