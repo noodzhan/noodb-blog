@@ -20,4 +20,14 @@ export default class EditArticleService {
       errorFn(error)
     })
   }
+
+  deleteApi (ids, successFn) {
+    this.$vm.$http({
+      url: this.$vm.$appUrl + this.$vm.autoPrefix() + '/article/delete',
+      method: 'post',
+      data: ids
+    }).then(resp => {
+      successFn(resp)
+    })
+  }
 }

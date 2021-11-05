@@ -12,8 +12,11 @@ import com.noodb.blog.vo.UploadImageVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * 博客的增删改查接口
@@ -48,10 +51,15 @@ public class BlogController {
   }
 
   @PostMapping("/edit")
-  public R<String> editOrInsertArticle(@RequestBody Article article) {
+  public R<String> editOrInsertArticle(@RequestBody @Validated Article article) {
     article.setSummary(articleService.extractSummaryHandle(article.getContent()));
     articleService.saveOrUpdate(article);
     return R.success(article.getId().toString());
+  }
+
+  @PostMapping("/delete")
+  public R<Boolean> deleteArticleByIds(@RequestBody List<String> ids) {
+    return R.success(articleService.removeByIds(ids));
   }
 
   @PostMapping("/img")

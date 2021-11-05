@@ -4,8 +4,9 @@
     <noodb-spin v-if="loading"></noodb-spin>
     <div class="edit-title">
       <span class="edit-title-span">  标题：</span>
-      <a-input v-model="article.title" style="flex: 2"></a-input>
-      <a-button type="primary" style="margin:0  20px" @click="save">保存</a-button>
+      <a-input v-model="article.title" style="flex: 2;"></a-input>
+      <a-button v-if="!isInsertPage" type="danger" style="margin:0  20px" @click="deleteFn">删除</a-button>
+      <a-button type="primary" :class="isInsertPage?'margin-button':'right-margin-button'" @click="save">保存</a-button>
     </div>
     <mavon-editor v-model="article.content" ref="mavonEditor" :autofocus="true" :scroll-style="true"
                   style="height: 80vh" :toolbars="toolbars" :subfield="!isPhoneScreen"
@@ -46,6 +47,13 @@ export default {
     }
 
   },
+  watch: {
+    '$route.path': function (newVal, oldVal) {
+      if (newVal.includes('new')) {
+        this.article = {}
+      }
+    }
+  },
   created () {
     const $vm = this
     window.addEventListener('resize', () => {
@@ -58,6 +66,7 @@ export default {
     if (id === 'new') {
       this.loading = false
       this.isInsertPage = true
+      this.article = {}
       return
     }
     this.$http({
@@ -75,6 +84,14 @@ export default {
     })
   },
   methods: {
+    deleteFn () {
+      this.editArticleService.deleteApi([this.article.id], (resp) => {
+        if (resp.data.code === 0) {
+          this.$notification.info({ message: '删除成功' })
+          this.$router.push('/home')
+        }
+      })
+    },
     save () {
       const $vm = this
       this.$http({
@@ -152,4 +169,13 @@ export default {
   text-align: center;
   font-size: 1.5em
 }
+
+.margin-button {
+  margin: 0 20px;
+}
+
+.right-margin-button {
+  margin: 0 20px 0 0;
+}
+
 </style>
