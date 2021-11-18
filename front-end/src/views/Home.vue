@@ -20,10 +20,9 @@
     <template v-slot:content>
       <div class="home-content">
         <noodb-spin v-if="loading"></noodb-spin>
-        <!--        <div v-if="blogs.length===0" style="height: 80vh"><h2>暂无数据</h2></div>-->
         <a-list item-layout="vertical" size="large" :data-source="blogs"
         >
-          <div class="load-more" @click="readMore" v-if="blogs.length>pageSize">
+          <div v-show="blogs.length < total" class="load-more" @click="readMore">
             <a slot="loadMore" href="javascript:void(0)">阅读更多</a>
           </div>
           <a-list-item slot="renderItem" slot-scope="item">
@@ -53,6 +52,7 @@ export default {
   },
   data: function () {
     return {
+      total: 0,
       pageSize: 15,
       pageNum: 1,
       loading: true,
@@ -80,6 +80,7 @@ export default {
             // Array.prototype.push.apply($vm.blogs, res.data.records)
             $vm.blogs = $vm.blogs.concat(res.data.records)
             this.pageNum++
+            $vm.total = res.data.total
           } else {
             $vm.$notification.warn({ message: '到底啦' })
           }
@@ -92,6 +93,7 @@ export default {
       this.api.getAllArticleSummary(this.pageNum, this.pageSize, (res) => {
         if (res.code === 0) {
           $vm.blogs = res.data.records
+          $vm.total = res.data.total
         }
         $vm.loading = false
       }, value)
@@ -103,6 +105,7 @@ export default {
     this.api.getAllArticleSummary(this.pageNum, this.pageSize, (res) => {
       if (res.code === 0) {
         $vm.blogs = res.data.records
+        $vm.total = res.data.total
       }
       $vm.loading = false
     })
