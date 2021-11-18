@@ -18,11 +18,12 @@
       </div>
     </template>
     <template v-slot:content>
-      <div>
+      <div class="home-content">
         <noodb-spin v-if="loading"></noodb-spin>
+        <!--        <div v-if="blogs.length===0" style="height: 80vh"><h2>暂无数据</h2></div>-->
         <a-list item-layout="vertical" size="large" :data-source="blogs"
         >
-          <div class="load-more" @click="readMore">
+          <div class="load-more" @click="readMore" v-if="blogs.length>pageSize">
             <a slot="loadMore" href="javascript:void(0)">阅读更多</a>
           </div>
           <a-list-item slot="renderItem" slot-scope="item">
@@ -145,6 +146,10 @@ export default {
 
 .load-more > a {
   color: #fff;
+}
+
+.home-content {
+  min-height: 80vh;
 }
 
 </style>
