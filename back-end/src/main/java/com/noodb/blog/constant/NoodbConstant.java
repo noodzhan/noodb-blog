@@ -8,4 +8,5 @@ package com.noodb.blog.constant;
  */
 public class NoodbConstant {
   public static final String resourceUrlPrefix = "https://www.noodb.com/resource/";
+  public static final String percentChar = "%";
 }

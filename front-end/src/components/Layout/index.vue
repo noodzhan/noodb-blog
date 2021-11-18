@@ -1,7 +1,7 @@
 <template>
   <div class="noodb-layout">
     <a-layout>
-      <NoodbHeader :is-show-search="isPCComponent"></NoodbHeader>
+      <NoodbHeader :is-show-search="isPCComponent" @headSearch="onHeadSearch"></NoodbHeader>
       <!--      <a-divider style="top: 64px;position: fixed;z-index: 1"></a-divider>-->
       <a-layout class="noodb-container">
         <a-layout-sider breakpoint="lg"
@@ -45,6 +45,9 @@ export default {
     },
     clickLogo () {
       router.push('/')
+    },
+    onHeadSearch (value) {
+      this.$emit('headSearch', value)
     }
   }
 }

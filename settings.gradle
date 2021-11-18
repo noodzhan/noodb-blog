@@ -1,4 +1,11 @@
+//pluginManagement {
+//    repositories {
+////        mavenLocal()
+//        mavenCentral()
+//    }
+//}
 rootProject.name = 'noodb'
 include 'back-end'
 include 'front-end'
+
 

@@ -2,7 +2,7 @@
   <div class="noodb-layout">
     <a-layout-header style="align-items: center;display: flex">
       <img src="../../asserts/img/logo.png" height="70%" @click="clickLogo">
-      <a-input-search style="width: 200px;margin-left: auto" v-show="isShowSearch"></a-input-search>
+      <a-input-search style="width: 200px;margin-left: auto" v-show="isShowSearch" @search="onSearch"></a-input-search>
 
       <a-dropdown style="padding-left: 50px" v-if="isShowPlus" :class="{'mobile-plus':!isShowSearch}">
         <a-icon type="plus"></a-icon>
@@ -29,6 +29,9 @@ export default {
     },
     clickWriteArticle () {
       router.push('/blog/edit/new')
+    },
+    onSearch (value) {
+      this.$emit('headSearch', value)
     }
 
   },

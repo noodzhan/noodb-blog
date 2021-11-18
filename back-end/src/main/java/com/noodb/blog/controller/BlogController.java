@@ -9,6 +9,7 @@ import com.noodb.blog.service.ArticleService;
 import com.noodb.blog.util.FileUtils;
 import com.noodb.blog.util.R;
 import com.noodb.blog.vo.UploadImageVO;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,10 +37,15 @@ public class BlogController {
   @GetMapping("/all")
   public R<Page> findAllArticleByPage(
       @RequestParam("pageNum") Integer pageNum,
-      @RequestParam(value = "pageSize", defaultValue = "15") Integer pageSize) {
+      @RequestParam(value = "pageSize", defaultValue = "15") Integer pageSize,
+      @RequestParam(value = "searchValue", required = false) String searchValue) {
     Page<Article> articlePage = new Page<>(pageNum, pageSize);
     articleService
         .lambdaQuery()
+        .like(
+            Strings.isNotBlank(searchValue),
+            Article::getTitle,
+            NoodbConstant.percentChar + searchValue + NoodbConstant.percentChar)
         .select(Article::getId, Article::getTitle, Article::getSummary)
         .page(articlePage);
     return R.success(articlePage);

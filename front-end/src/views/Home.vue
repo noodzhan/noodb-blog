@@ -1,5 +1,5 @@
 <template>
-  <NoodbLayout>
+  <NoodbLayout @headSearch="onHeadSearch">
     <template v-slot:side>
       <div>
         <a-card title="推荐文档" :bordered="false">
@@ -84,6 +84,16 @@ export default {
           }
         }
       })
+    },
+    onHeadSearch (value) {
+      // console.log(value)
+      const $vm = this
+      this.api.getAllArticleSummary(this.pageNum, this.pageSize, (res) => {
+        if (res.code === 0) {
+          $vm.blogs = res.data.records
+        }
+        $vm.loading = false
+      }, value)
     }
 
   },
@@ -108,13 +118,14 @@ export default {
   padding-top: 5px;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space:nowrap;
+  white-space: nowrap;
 }
 
 .post:hover {
   background: #e5eaef;;
 }
-.load-more{
+
+.load-more {
   width: 80%;
   height: 40px;
   margin: 30px auto 60px;
@@ -126,11 +137,13 @@ export default {
   background-color: #a5a5a5;
   display: block;
 }
+
 .load-more:hover {
   color: #fff;
   background-color: #9b9b9b;
 }
-.load-more > a{
+
+.load-more > a {
   color: #fff;
 }
 

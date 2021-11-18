@@ -6,13 +6,14 @@ export default class HomeService {
     this.$vm = $vm
   }
 
-  getAllArticleSummary (pageNum, pageSize, callBack) {
+  getAllArticleSummary (pageNum, pageSize, callBack, searchValue) {
     this.$vm.$http({
       url: this.$vm.$appUrl + this.$vm.autoPrefix() + '/article/all',
       method: 'GET',
       params: {
         pageNum: pageNum || 1,
-        pageSize: pageSize || 15
+        pageSize: pageSize || 15,
+        searchValue: searchValue
       }
     }).then(res => {
       callBack(res.data)
