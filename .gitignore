@@ -1,2 +1,6 @@
 /back-end/build/
 /front-end/node_modules/
+/front-end/dist/
+/.idea
+/.gradle
+front-end/package-lock.json
