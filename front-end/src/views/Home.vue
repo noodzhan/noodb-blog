@@ -91,7 +91,7 @@ export default {
       // console.log(value)
       const $vm = this
       // 暂时搜索不支持分页。
-      this.api.getAllArticleSummary(1, 1000, (res) => {
+      this.api.getAllArticleSummary(1, this.pageSize, (res) => {
         if (res.code === 0) {
           $vm.blogs = res.data.records
           $vm.total = res.data.total
