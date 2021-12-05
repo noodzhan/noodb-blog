@@ -90,7 +90,8 @@ export default {
     onHeadSearch (value) {
       // console.log(value)
       const $vm = this
-      this.api.getAllArticleSummary(this.pageNum, this.pageSize, (res) => {
+      // 暂时搜索不支持分页。
+      this.api.getAllArticleSummary(1, 1000, (res) => {
         if (res.code === 0) {
           $vm.blogs = res.data.records
           $vm.total = res.data.total
