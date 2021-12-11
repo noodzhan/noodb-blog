@@ -6,6 +6,11 @@ import Article from '@/views/Article'
 import Edit from '@/views/Edit'
 import Login from '@/views/Login'
 import store from '@/store'
+const routerPushProxy = VueRouter.prototype.push
+
+VueRouter.prototype.push = function (location) {
+  return routerPushProxy.call(this, location).catch((error) => { console.warn(error) })
+}
 
 Vue.use(VueRouter)
 
