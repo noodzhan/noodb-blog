@@ -15,6 +15,7 @@
         <div id="md" v-html="md"/>
         <noodb-spin v-if="loading"></noodb-spin>
       </div>
+      <noodb-back-top />
     </template>
   </NoodbLayout>
 </template>
@@ -25,12 +26,14 @@ import HighLight from 'highlight.js'
 import router from '@/router'
 import NoodbSpin from '@/components/Spin'
 import { cleanUrl } from 'marked/src/helpers'
+import NoodbBackTop from '@/components/backTop'
 
 export default {
   name: 'Article',
   components: {
     NoodbLayout,
-    NoodbSpin
+    NoodbSpin,
+    NoodbBackTop
   },
   data: function () {
     return {

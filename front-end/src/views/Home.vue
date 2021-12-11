@@ -34,6 +34,7 @@
           </a-list-item>
         </a-list>
       </div>
+      <noodb-back-top />
     </template>
   </NoodbLayout>
 </template>
@@ -43,12 +44,14 @@ import NoodbLayout from '@/components/Layout'
 import router from '@/router'
 import HomeService from '@/asserts/js/homeService'
 import NoodbSpin from '@/components/Spin'
+import NoodbBackTop from '@/components/backTop'
 
 export default {
   name: 'Home',
   components: {
     NoodbLayout,
-    NoodbSpin
+    NoodbSpin,
+    NoodbBackTop
   },
   data: function () {
     return {
