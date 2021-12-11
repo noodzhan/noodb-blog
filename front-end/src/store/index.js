@@ -6,7 +6,8 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     isLogin: false,
-    userInfo: {}
+    userInfo: {},
+    lastRouteHistory: {}
   },
   mutations: {
     setLoginFlag: (state, payload) => {
@@ -14,7 +15,11 @@ const store = new Vuex.Store({
     },
     setUserInfo: (state, payload) => {
       state.userInfo = payload
+    },
+    setLastRouteHistory: (state, payload) => {
+      state.lastRouteHistory = payload
     }
+
   }
 })
 export default store

@@ -54,7 +54,7 @@ export default {
               // 成功
               $vm.$store.commit('setLoginFlag', true)
               $vm.$store.commit('setUserInfo', resp.data.data)
-              $vm.$router.push('/home')
+              this.jumpLastIfRouteHistory($vm)
             } else {
               $vm.$notification.error({ message: '登入失败' })
             }
@@ -64,6 +64,13 @@ export default {
     },
     resetForm () {
       this.$refs.loginForm.resetFields()
+    },
+    jumpLastIfRouteHistory ($vm) {
+      if ($vm.$store.state.lastRouteHistory && $vm.$store.state.lastRouteHistory.path) {
+        $vm.$router.push($vm.$store.state.lastRouteHistory.path)
+      } else {
+        $vm.$router.push('/home')
+      }
     }
 
   }

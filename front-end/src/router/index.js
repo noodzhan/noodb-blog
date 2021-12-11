@@ -36,6 +36,7 @@ router.beforeEach((to, from, next) => {
     if (store.state.isLogin) {
       next()
     } else {
+      store.commit('setLastRouteHistory', to)
       next('/login')
     }
   } else {
