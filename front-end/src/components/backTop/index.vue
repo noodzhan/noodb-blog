@@ -1,9 +1,9 @@
 <template>
 <div class="back-top">
      <a-back-top style="bottom: 200px">
-      <div class="ant-back-top-inner">
+      <!-- <div class="ant-back-top-inner">
         UP
-      </div>
+      </div> -->
     </a-back-top>
 </div>
 </template>
