@@ -15,12 +15,12 @@ VueRouter.prototype.push = function (location) {
 Vue.use(VueRouter)
 
 const routers = [
-  { path: '/', redirect: '/home' },
+  { path: '/', redirect: '/home', meta: { title: 'noodb个人博客' } },
   { path: '/login', component: Login },
   { path: '/profile', component: Profile },
   { path: '/blog/:articleId', component: Article },
   { path: '/blog/edit/:articleId', component: Edit },
-  { path: '/home', component: Home }
+  { path: '/home', component: Home, meta: { title: 'noodb个人博客' } }
 ]
 const router = new VueRouter({
   mode: 'history',
@@ -38,7 +38,7 @@ router.beforeEach((to, from, next) => {
     }
   })
   if (forwardLogin) {
-    if (store.state.isLogin) {
+    if (store.state.isLogin || window.isDev) {
       next()
     } else {
       store.commit('setLastRouteHistory', to)

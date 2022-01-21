@@ -80,7 +80,7 @@ export default {
         if (title) {
           out += ' title="' + title + '"'
         }
-        const width = "style='width:100%'"
+        const width = "style='width:auto;height:auto;max-width:100%;max-height:100%'"
         out += width
         out += this.options.xhtml ? '/>' : '>'
         return out
@@ -113,6 +113,8 @@ export default {
       if (res.data.code === 0) {
         this.articleId = res.data.data.id
         this.md = Marked(res.data.data.content)
+        // 设置网页title
+        document.title = res.data.data.title
       } else {
         this.$notification.warning({ message: '系统错误' })
       }

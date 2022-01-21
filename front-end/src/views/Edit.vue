@@ -6,7 +6,7 @@
       <span class="edit-title-span">  标题：</span>
       <a-input v-model="article.title" style="flex: 2;"></a-input>
       <a-button v-if="!isInsertPage" type="danger" style="margin:0  20px" @click="deleteFn">删除</a-button>
-      <a-button type="primary" :class="isInsertPage?'margin-button':'right-margin-button'" @click="save">保存</a-button>
+      <a-button type="primary" :class="isInsertPage?'margin-button':'right-margin-button'" @click="saveWrapper">保存</a-button>
     </div>
     <mavon-editor v-model="article.content" ref="mavonEditor" :autofocus="true" :scroll-style="true"
                   style="height: 80vh" :toolbars="toolbars" :subfield="!isPhoneScreen"
@@ -19,7 +19,7 @@
 <script>
 import NoodbHeader from '@/components/Header'
 import 'highlight.js/styles/github.css'
-import { isPhoneScreen } from '../asserts/js/utils'
+import { isPhoneScreen, debounce } from '../asserts/js/utils'
 import NoodbSpin from '@/components/Spin'
 import EditArticleService from '@/asserts/js/eidtArticle'
 import MavonEditConfig from '@/asserts/js/MavonEditorConfig'
@@ -34,7 +34,8 @@ export default {
       article: {},
       isPhoneScreen: false,
       editArticleService: new EditArticleService(this),
-      isInsertPage: false
+      isInsertPage: false,
+      saveWrapper: debounce(this.save, 1000)
     }
   },
   computed: {

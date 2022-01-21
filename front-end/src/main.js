@@ -19,7 +19,7 @@ Vue.prototype.$notification.config({
   top: 70,
   duration: 3
 })
-
+window.isDev = process.env.NODE_ENV === 'development'
 Vue.prototype.autoPrefix = function () {
   if (process.env.NODE_ENV === 'development') {
     return '/api'
