@@ -7,13 +7,12 @@
 <script>
 export default {
   name: 'App',
-  components: {
-  }
-}
+  components: {}
+};
 </script>
 
 <style>
-#app{
+#app {
   height: 100%;
   width: 100%;
 }

@@ -1,7 +1,7 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
@@ -11,15 +11,14 @@ const store = new Vuex.Store({
   },
   mutations: {
     setLoginFlag: (state, payload) => {
-      state.isLogin = payload
+      state.isLogin = payload;
     },
     setUserInfo: (state, payload) => {
-      state.userInfo = payload
+      state.userInfo = payload;
     },
     setLastRouteHistory: (state, payload) => {
-      state.lastRouteHistory = payload
+      state.lastRouteHistory = payload;
     }
-
   }
-})
-export default store
+});
+export default store;

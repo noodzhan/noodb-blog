@@ -20,11 +20,11 @@ module.exports = {
    * 修改插件的配置
    * @param config
    */
-  chainWebpack: config => {
-    config.plugin('html').tap(arg => {
-      arg[0].title = 'noodb'
-      return arg
-    })
-  },
+  // chainWebpack: config => {
+  //   config.plugin('html').tap(arg => {
+  //     arg[0].title = 'noodb'
+  //     return arg
+  //   })
+  // },
   productionSourceMap: false
-}
+};

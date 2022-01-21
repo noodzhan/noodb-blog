@@ -3,10 +3,7 @@ module.exports = {
     browser: true,
     es6: true
   },
-  extends: [
-    'plugin:vue/essential',
-    'standard'
-  ],
+  extends: ['plugin:vue/essential', 'standard'],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly'
@@ -15,8 +12,11 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: 'module'
   },
-  plugins: [
-    'vue'
-  ],
-  rules: {}
-}
+  plugins: ['vue'],
+  rules: {
+    semi: ['error', 'always'],
+    quotes: ['error', 'single'],
+    'comma-dangle': ['error', 'never'],
+    'space-before-function-paren': 0
+  }
+};

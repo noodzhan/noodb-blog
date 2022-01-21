@@ -1,5 +1,5 @@
 export default class MavonEditConfig {
-  static pcToolBars () {
+  static pcToolBars() {
     return {
       bold: true, // 粗体
       italic: true, // 斜体
@@ -34,10 +34,10 @@ export default class MavonEditConfig {
       /* 2.2.1 */
       subfield: true, // 单双栏模式
       preview: true // 预览
-    }
+    };
   }
 
-  static phoneToolBars () {
+  static phoneToolBars() {
     return {
       bold: true, // 粗体
       italic: true, // 斜体
@@ -45,6 +45,6 @@ export default class MavonEditConfig {
       underline: true, // 下划线
       strikethrough: true, // 中划线
       mark: true // 标记
-    }
+    };
   }
 }

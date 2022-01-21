@@ -4,8 +4,7 @@
 <script>
 export default {
   name: 'NoodbSpin'
-}
-
+};
 </script>
 <style scoped lang="css">
 .loading {

@@ -1,15 +1,26 @@
 <template>
   <div class="noodb-layout">
     <a-layout>
-      <NoodbHeader :is-show-search="isPCComponent" @headSearch="onHeadSearch"></NoodbHeader>
+      <NoodbHeader
+        :is-show-search="isPCComponent"
+        @headSearch="onHeadSearch"
+      ></NoodbHeader>
       <!--      <a-divider style="top: 64px;position: fixed;z-index: 1"></a-divider>-->
       <a-layout class="noodb-container">
-        <a-layout-sider breakpoint="lg"
-                        collapsed-width="0"
-                        :trigger=null theme="light" @breakpoint="breakpoint" v-show="isPCComponent">
+        <a-layout-sider
+          breakpoint="lg"
+          collapsed-width="0"
+          :trigger="null"
+          theme="light"
+          @breakpoint="breakpoint"
+          v-show="isPCComponent"
+        >
           <slot name="side">侧边区</slot>
         </a-layout-sider>
-        <a-layout-content :class="{'phone-content':!isPCComponent}" class="noodb-content">
+        <a-layout-content
+          :class="{ 'phone-content': !isPCComponent }"
+          class="noodb-content"
+        >
           <slot name="content">内容区</slot>
         </a-layout-content>
       </a-layout>
@@ -21,36 +32,36 @@
 </template>
 
 <script>
-import router from '@/router'
-import NoodbHeader from '@/components/Header'
+import router from '@/router';
+import NoodbHeader from '@/components/Header';
 
 export default {
   name: 'NoodbLayout',
   components: {
     NoodbHeader
   },
-  data: function () {
+  data: function() {
     return {
       // 控制pc是否显示组件
       isPCComponent: true
-    }
+    };
   },
   methods: {
-    breakpoint (broken) {
+    breakpoint(broken) {
       if (broken) {
-        this.isPCComponent = false
+        this.isPCComponent = false;
       } else {
-        this.isPCComponent = true
+        this.isPCComponent = true;
       }
     },
-    clickLogo () {
-      router.push('/')
+    clickLogo() {
+      router.push('/');
     },
-    onHeadSearch (value) {
-      this.$emit('headSearch', value)
+    onHeadSearch(value) {
+      this.$emit('headSearch', value);
     }
   }
-}
+};
 </script>
 
 <style scoped>
