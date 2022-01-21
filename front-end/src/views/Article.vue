@@ -1,7 +1,7 @@
 <template>
   <NoodbLayout>
     <template v-slot:side>
-      <div style="padding-left: 20px" class="left-catalog">
+      <div class="left-catalog">
         <a-anchor :offsetTop="70">
           <a-anchor-link
             v-for="(item, index) in titles"
@@ -15,11 +15,7 @@
     <template v-slot:content>
       <div>
         <a-tooltip placement="bottomLeft" title="编辑">
-          <a-icon
-            type="edit"
-            style="position: fixed;right: 0;padding-right: 3vw;padding-top: 10px"
-            @click="editMd"
-          />
+          <a-icon type="edit" @click="editMd" class="noodb-edit-icon" />
         </a-tooltip>
         <div id="md" v-html="md" />
         <noodb-spin v-if="loading"></noodb-spin>
@@ -164,6 +160,9 @@ export default {
 };
 </script>
 <style scoped>
+.left-catalog {
+  padding-left: 20px;
+}
 .left-catalog >>> .ant-affix {
   top: 64px;
 }
