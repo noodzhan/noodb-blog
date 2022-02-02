@@ -4,3 +4,6 @@
 /.idea
 /.gradle
 front-end/package-lock.json
+temp/*
+back-end/bin/*
+

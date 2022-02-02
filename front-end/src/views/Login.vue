@@ -1,7 +1,5 @@
 <template>
-  <div
-    style="margin: 20vh auto;width: 300px;display: flex;flex-direction: column;"
-  >
+  <div class="login-container">
     <img src="@/asserts/img/logo.png" style="margin: 15px auto" />
     <a-form-model
       :model="formObj"
@@ -95,6 +93,12 @@ export default {
 };
 </script>
 <style scoped lang="css">
+.login-container {
+  margin: 20vh auto;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+}
 .login-footer {
   text-align: center;
 }
