@@ -9,14 +9,14 @@
           v-if="!isInsertPage"
           type="danger"
           style="margin:0  20px"
-          @click="deleteFn"
+          @click="deleteWrapper"
       >删除
       </a-button
       >
       <a-button
           type="primary"
           :class="isInsertPage ? 'margin-button' : 'right-margin-button'"
-          @click="debounce(this.save, 1000)"
+          @click="saveWrapper"
       >保存
       </a-button
       >
@@ -55,7 +55,9 @@ export default {
       isPhoneScreen: false,
       editArticleService: new EditArticleService(this),
       isInsertPage: false,
-      saveWrapper: debounce(this.save, 1000)
+      // 这种方式直接是绑定事件回调
+      saveWrapper: debounce(this.save, 1000),
+      deleteWrapper: debounce(this.deleteFn, 1000)
     };
   },
   computed: {
