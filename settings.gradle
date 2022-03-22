@@ -1,9 +1,10 @@
-//pluginManagement {
-//    repositories {
-////        mavenLocal()
-//        mavenCentral()
-//    }
-//}
+pluginManagement {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
 rootProject.name = 'noodb'
 include 'back-end'
 include 'front-end'

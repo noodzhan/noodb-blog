@@ -17,7 +17,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: root
-    url: jdbc:mysql://127.0.0.1:3306/nblog?useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://127.0.0.1:3306/nblog?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
   servlet:
     multipart:
       max-file-size: 2MB

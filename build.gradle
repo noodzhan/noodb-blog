@@ -1,6 +1,6 @@
 plugins {
-//    id 'org.hidetake.ssh' version '2.10.1'
-//    id 'com.noodb.hello-plugin' version '1.0-SNAPSHOT'
+    id 'org.hidetake.ssh' version '2.10.1'
+    id 'com.noodb.hello-plugin' version '1.0-SNAPSHOT'
 }
 group 'com.noodb'
 version '1.0.0'
@@ -11,24 +11,30 @@ repositories {
     mavenCentral()
 }
 
-
-//remotes {
-//    server {
-//        user = System.getProperty("user.name")
-//        host = '1.15.231.74'
-//        identity = file("${System.getProperty('user.home')}/.ssh/id_rsa")
-//    }
-//}
 //
-//task checkServe {
-//    doLast {
-//        ssh.run {
-//            session(remotes.server) {
-//                def check = execute 'ls -al'
-//                println check
-//            }
-//        }
-//    }
-//}
+tasks.register('depolyServer') {
+    description('build front end !')
+    dependsOn ':front-end:buildVue'
+    dependsOn ':back-end:build'
+}
+
+remotes {
+    server {
+        user = System.getProperty("user.name")
+        host = '1.15.231.74'
+        identity = file("${System.getProperty('user.home')}/.ssh/id_rsa")
+    }
+}
+
+task checkServe {
+    doLast {
+        ssh.run {
+            session(remotes.server) {
+                def check = execute 'ls -al'
+                println check
+            }
+        }
+    }
+}
 
 
