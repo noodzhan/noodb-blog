@@ -4,27 +4,27 @@
       <div>
         <a-card title="推荐文档" :bordered="false">
           <div
-            v-for="(item, index) in recommendBooks"
-            :key="index"
-            class="recommend-book"
+              v-for="(item, index) in recommendDocs"
+              :key="index"
+              class="recommend-book"
           >
-            <a>{{ item.name }}</a>
+            <a :href="item.url">{{ item.name }}</a>
           </div>
         </a-card>
         <a-card title="推荐书籍" :bordered="false">
           <div
-            v-for="(item, index) in recommendBooks"
-            :key="index"
-            class="recommend-book"
+              v-for="(item, index) in recommendBooks"
+              :key="index"
+              class="recommend-book"
           >
-            <a>{{ item.name }}</a>
+            <p>{{ item.name }}</p>
           </div>
         </a-card>
         <a-card title="捐赠支持" :bordered="false">
           <img
-            src="../asserts/img/payme.jpeg"
-            width="100%"
-            style="text-align: center"
+              src="../asserts/img/payme.jpeg"
+              width="100%"
+              style="text-align: center"
           />
         </a-card>
       </div>
@@ -34,9 +34,9 @@
         <noodb-spin v-if="loading"></noodb-spin>
         <a-list item-layout="vertical" size="large" :data-source="blogs">
           <div
-            v-show="blogs.length < total"
-            class="load-more"
-            @click="readMore"
+              v-show="blogs.length < total"
+              class="load-more"
+              @click="readMore"
           >
             <a slot="loadMore" href="javascript:void(0)">阅读更多</a>
           </div>
@@ -47,7 +47,7 @@
           </a-list-item>
         </a-list>
       </div>
-      <noodb-back-top />
+      <noodb-back-top/>
     </template>
   </NoodbLayout>
 </template>
@@ -66,7 +66,7 @@ export default {
     NoodbSpin,
     NoodbBackTop
   },
-  data: function() {
+  data: function () {
     return {
       total: 0,
       pageSize: 15,
@@ -75,6 +75,12 @@ export default {
       busy: false,
       api: new HomeService(this),
       blogs: [],
+      recommendDocs: [
+        { name: 'vuejs', url: 'https://cn.vuejs.org/index.html' },
+        { name: 'spring', url: 'https://spring.io/' },
+        { name: 'mdn web docs ', url: 'https://developer.mozilla.org/zh-CN/docs/Learn' },
+        { name: 'stackoverflow', url: 'https://stackoverflow.com/' }
+      ],
       recommendBooks: [
         { name: 'JavaScript高级程序设计' },
         { name: '深入迁出vuejs' },
