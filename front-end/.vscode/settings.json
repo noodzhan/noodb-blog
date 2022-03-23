@@ -13,21 +13,22 @@
     "editor.formatOnSave": true
   },
   "[markdown]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": false
   },
-  "[json]":{
+  "[json]": {
     "editor.quickSuggestions": {
       "strings": true
     },
     "editor.suggest.insertMode": "replace",
-    "gitlens.codeLens.scopes": [
-      "document"
-    ]
+    "gitlens.codeLens.scopes": ["document"]
   },
+  "prettier.documentSelectors": ["**/*.vue"],
   "vim.handleKeys": {
     "<C-c>": false,
     "<C-f>": false,
     "<C-v>": false
   },
+  "editor.formatOnSave": false,
   "vim.useSystemClipboard": true
 }
