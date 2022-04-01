@@ -4,11 +4,11 @@
       <div class="left-catalog">
         <a-anchor :offsetTop="70">
           <a-anchor-link
-              v-for="(item, index) in titles"
-              :href="'#' + item.id"
-              :key="index"
-              :title="item.title"
-              :style="{'padding-left': 10*item.level +'px'}"
+            v-for="(item, index) in titles"
+            :href="'#' + item.id"
+            :key="index"
+            :title="item.title"
+            :style="{ 'padding-left': 10 * item.level + 'px' }"
           />
         </a-anchor>
       </div>
@@ -16,12 +16,12 @@
     <template v-slot:content>
       <div>
         <a-tooltip placement="bottomLeft" title="编辑">
-          <a-icon type="edit" @click="editMd" class="noodb-edit-icon"/>
+          <a-icon type="edit" @click="editMd" class="noodb-edit-icon" />
         </a-tooltip>
-        <div id="md" v-html="md"/>
+        <div id="md" v-html="md" />
         <noodb-spin v-if="loading"></noodb-spin>
       </div>
-      <noodb-back-top/>
+      <noodb-back-top />
     </template>
   </NoodbLayout>
 </template>
@@ -58,8 +58,8 @@ export default {
       url: this.$appUrl + this.autoPrefix() + '/article/one',
       method: 'GET',
       params: { id: this.$route.params.articleId }
-    }).then(res => {
-      if (res.data.code === 0) {
+    }).then((res) => {
+      if (res.data.code === 0 && res.data && res.data.data) {
         this.articleId = res.data.data.id;
         this.markedWrapper.setSrc(res.data.data.content);
         this.md = this.markedWrapper.renderer();
@@ -67,7 +67,8 @@ export default {
         // 设置网页title
         document.title = res.data.data.title;
       } else {
-        this.$notification.warning({ message: '系统错误' });
+        this.$notification.warning({ message: '当前博客不存在' });
+        this.$router.push('/home');
       }
       this.loading = false;
     });
