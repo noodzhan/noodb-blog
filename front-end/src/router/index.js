@@ -8,8 +8,8 @@ import Login from '@/views/Login';
 import store from '@/store';
 const routerPushProxy = VueRouter.prototype.push;
 
-VueRouter.prototype.push = function(location) {
-  return routerPushProxy.call(this, location).catch(error => {
+VueRouter.prototype.push = function (location) {
+  return routerPushProxy.call(this, location).catch((error) => {
     console.warn(error);
   });
 };
@@ -32,9 +32,9 @@ const router = new VueRouter({
 });
 const mustLoginUrl = ['blog/edit'];
 router.beforeEach((to, from, next) => {
-  // nextHomeIfCondition(to, from, next)
+  // nextHomeIfCondition(to, from, next);
   let forwardLogin = false;
-  mustLoginUrl.forEach(url => {
+  mustLoginUrl.forEach((url) => {
     if (to.path.includes(url)) {
       forwardLogin = true;
     }
@@ -57,15 +57,42 @@ router.beforeEach((to, from, next) => {
  * @param from
  * @param next
  */
-// function nextHomeIfCondition (to, from, next) {
-//   let isIllegalRoute = false
-//   routers.forEach(item => {
-//     if (!to.path.includes(item.path)) {
-//       isIllegalRoute = true
+// function nextHomeIfCondition(to, from, next) {
+//   let isIllegalRoute = true;
+//   routers.forEach((item) => {
+//     if (isMatch(item.path, to.path)) {
+//       console.log(item.path, to.path);
+//       isIllegalRoute = false;
 //     }
-//   })
+//   });
+
+//   // 单个路径比对
+//   function isMatch(expectedPath, actualPath) {
+//     let result = true;
+//     const expectedPathArray = expectedPath
+//       .split('/')
+//       .filter((item) => item !== '');
+//     const actualPathArray = actualPath.split('/').filter((item) => item !== '');
+//     console.log('expected:', expectedPathArray, '   actual:', actualPathArray);
+//     if (expectedPathArray.length > actualPathArray.length) {
+//       return false;
+//     }
+//     actualPathArray.forEach((item, index) => {
+//       if (
+//         item !== expectedPathArray[index] &&
+//         item === '*' &&
+//         item.startsWith(':')
+//       ) {
+//         result = false;
+//       }
+//     });
+//     return result;
+//   }
+
+//   // router.match
+
 //   if (isIllegalRoute) {
-//     next('/')
+//     next('/');
 //   }
 // }
 
