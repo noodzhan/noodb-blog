@@ -4,27 +4,27 @@
       <div>
         <a-card title="推荐文档" :bordered="false">
           <div
-              v-for="(item, index) in recommendDocs"
-              :key="index"
-              class="recommend-book"
+            v-for="(item, index) in recommendDocs"
+            :key="index"
+            class="recommend-book"
           >
             <a :href="item.url">{{ item.name }}</a>
           </div>
         </a-card>
         <a-card title="推荐书籍" :bordered="false">
           <div
-              v-for="(item, index) in recommendBooks"
-              :key="index"
-              class="recommend-book"
+            v-for="(item, index) in recommendBooks"
+            :key="index"
+            class="recommend-book"
           >
             <p>{{ item.name }}</p>
           </div>
         </a-card>
         <a-card title="捐赠支持" :bordered="false">
           <img
-              src="../asserts/img/payme.jpeg"
-              width="100%"
-              style="text-align: center"
+            src="../asserts/img/payme.jpeg"
+            width="100%"
+            style="text-align: center"
           />
         </a-card>
       </div>
@@ -34,9 +34,9 @@
         <noodb-spin v-if="loading"></noodb-spin>
         <a-list item-layout="vertical" size="large" :data-source="blogs">
           <div
-              v-show="blogs.length < total"
-              class="load-more"
-              @click="readMore"
+            v-show="blogs.length < total"
+            class="load-more"
+            @click="readMore"
           >
             <a slot="loadMore" href="javascript:void(0)">阅读更多</a>
           </div>
@@ -47,7 +47,7 @@
           </a-list-item>
         </a-list>
       </div>
-      <noodb-back-top/>
+      <noodb-back-top />
     </template>
   </NoodbLayout>
 </template>
@@ -78,7 +78,10 @@ export default {
       recommendDocs: [
         { name: 'vuejs', url: 'https://cn.vuejs.org/index.html' },
         { name: 'spring', url: 'https://spring.io/' },
-        { name: 'mdn web docs ', url: 'https://developer.mozilla.org/zh-CN/docs/Learn' },
+        {
+          name: 'mdn web docs ',
+          url: 'https://developer.mozilla.org/zh-CN/docs/Learn'
+        },
         { name: 'stackoverflow', url: 'https://stackoverflow.com/' }
       ],
       recommendBooks: [
@@ -101,7 +104,7 @@ export default {
     },
     readMore() {
       const $vm = this;
-      this.api.getAllArticleSummary(this.pageNum + 1, this.pageSize, res => {
+      this.api.getAllArticleSummary(this.pageNum + 1, this.pageSize, (res) => {
         if (res.code === 0) {
           if (res.data.records.length > 0) {
             // Array.prototype.push.apply($vm.blogs, res.data.records)
@@ -121,7 +124,7 @@ export default {
       this.api.getAllArticleSummary(
         1,
         this.pageSize,
-        res => {
+        (res) => {
           if (res.code === 0) {
             $vm.blogs = res.data.records;
             $vm.total = res.data.total;
@@ -135,7 +138,7 @@ export default {
   beforeMount() {
     document.title = 'noodb个人博客';
     const $vm = this;
-    this.api.getAllArticleSummary(this.pageNum, this.pageSize, res => {
+    this.api.getAllArticleSummary(this.pageNum, this.pageSize, (res) => {
       if (res.code === 0) {
         $vm.blogs = res.data.records;
         $vm.total = res.data.total;
@@ -146,6 +149,13 @@ export default {
 };
 </script>
 <style scoped>
+/deep/ .ant-list-item-meta-description {
+  color: #555666 !important;
+}
+/deep/ .ant-list-vertical .ant-list-item-meta-title {
+  color: #222226;
+  font-size: 18px;
+}
 .post {
   margin: 1vh 1vh 0 0;
   padding-right: 2vw;

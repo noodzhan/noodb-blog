@@ -16,4 +16,7 @@ export default {
   height: 100%;
   width: 100%;
 }
+body {
+  color: #4d4d4d !important;
+}
 </style>
