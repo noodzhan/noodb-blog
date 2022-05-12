@@ -40,7 +40,7 @@ export default {
   components: {
     NoodbHeader
   },
-  data: function() {
+  data: function () {
     return {
       // 控制pc是否显示组件
       isPCComponent: true
@@ -90,6 +90,7 @@ export default {
   background: white;
   padding: 0 2em;
   margin-left: 200px;
+  min-height: calc(100vh - 128px);
 }
 
 @media screen and (min-width: 960px) {
