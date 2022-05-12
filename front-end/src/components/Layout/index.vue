@@ -25,7 +25,7 @@
         </a-layout-content>
       </a-layout>
       <a-layout-footer>
-        <span>版权所有@ www.noodb.com &&& 赣ICP备2021005048号-1</span>
+        <span>版权所有@ www.noodb.com &&& 赣ICP备2021005048号</span>
       </a-layout-footer>
     </a-layout>
   </div>
