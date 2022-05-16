@@ -4,6 +4,8 @@
 /.idea
 /.gradle
 front-end/package-lock.json
+nuxtapp/node_modules
+nuxtapp/.nuxt
 temp/*
 back-end/bin/*
 

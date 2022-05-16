@@ -1,0 +1,10 @@
+/*被markdown格式化之后，更改的样式*/
+#md code{
+    display: block;
+    width: 90vw;
+    overflow-y: hidden;
+    overflow-x: scroll;
+}
+.border{
+    border: red 1px solid;
+}
