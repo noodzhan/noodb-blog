@@ -15,19 +15,24 @@ export default class MarkedWrapper {
     const self = this;
     const renderer = {
       heading(text, level, raw, slugger) {
-        self.headerList.push({ title: text, level: level, raw: raw, id: self.idStart });
+        self.headerList.push({
+          title: text,
+          level: level,
+          raw: raw,
+          id: self.idStart
+        });
         if (this.options.headerIds) {
           return (
             '<h' +
-                        level +
-                        ' id="' +
-                        (this.options.headerPrefix +
-                            self.idStart++) +
-                        '" ' + '>' +
-                        text +
-                        '</h' +
-                        level +
-                        '>\n'
+            level +
+            ' id="' +
+            (this.options.headerPrefix + self.idStart++) +
+            '" ' +
+            '>' +
+            text +
+            '</h' +
+            level +
+            '>\n'
           );
         }
         // ignore IDs
@@ -46,7 +51,7 @@ export default class MarkedWrapper {
           out += ' title="' + title + '"';
         }
         const width =
-                    "style='width:auto;height:auto;max-width:100%;max-height:100%'";
+          "style='width:auto;height:auto;max-width:100%;max-height:100%'";
         out += width;
         out += this.options.xhtml ? '/>' : '>';
         return out;

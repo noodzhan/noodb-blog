@@ -53,31 +53,31 @@
 </template>
 
 <script>
-import NoodbLayout from "@/components/Layout";
+import NoodbLayout from '@/components/Layout';
 // import router from '@/router';
-import HomeService from "@/assets/js/homeService";
-import NoodbSpin from "@/components/Spin";
-import NoodbBackTop from "@/components/backTop";
+import HomeService from '@/assets/js/homeService';
+import NoodbSpin from '@/components/Spin';
+import NoodbBackTop from '@/components/backTop';
 
 export default {
   head: {
-    title: "noodb个人博客",
+    title: 'noodb个人博客',
     meta: [
-      { charset: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
-        hid: "description",
-        name: "description",
-        content: "my website description",
-      },
+        hid: 'description',
+        name: 'description',
+        content: 'my website description'
+      }
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/img/favicon.ico" }],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/img/favicon.ico' }]
   },
-  name: "Home",
+  name: 'Home',
   components: {
     NoodbLayout,
     NoodbSpin,
-    NoodbBackTop,
+    NoodbBackTop
   },
   data: function () {
     return {
@@ -89,31 +89,31 @@ export default {
       api: null,
       blogs: [],
       recommendDocs: [
-        { name: "vuejs", url: "https://cn.vuejs.org/index.html" },
-        { name: "spring", url: "https://spring.io/" },
+        { name: 'vuejs', url: 'https://cn.vuejs.org/index.html' },
+        { name: 'spring', url: 'https://spring.io/' },
         {
-          name: "mdn web docs ",
-          url: "https://developer.mozilla.org/zh-CN/docs/Learn",
+          name: 'mdn web docs ',
+          url: 'https://developer.mozilla.org/zh-CN/docs/Learn'
         },
-        { name: "stackoverflow", url: "https://stackoverflow.com/" },
+        { name: 'stackoverflow', url: 'https://stackoverflow.com/' }
       ],
       recommendBooks: [
-        { name: "JavaScript高级程序设计" },
-        { name: "深入迁出vuejs" },
-        { name: "代码之道" },
-        { name: "面向对象葵花宝典" },
-      ],
+        { name: 'JavaScript高级程序设计' },
+        { name: '深入迁出vuejs' },
+        { name: '代码之道' },
+        { name: '面向对象葵花宝典' }
+      ]
     };
   },
   async fetch() {
     await this.$axios({
-      url: "/api/article/all",
-      method: "GET",
+      url: '/api/article/all',
+      method: 'GET',
       params: {
         pageNum: 1,
         pageSize: 15,
-        searchValue: null,
-      },
+        searchValue: null
+      }
     }).then((res) => {
       if (res.data.code === 0) {
         this.blogs = res.data.data.records;
@@ -126,11 +126,11 @@ export default {
   methods: {
     clickOnArticle(article) {
       // 跳转到文章详情页面，并且通过参数传递文章id
-      router.push({
-        path: "/blog/" + article.id,
+      this.$router.push({
+        path: '/blog/' + article.id,
         params: {
-          articleId: article.id,
-        },
+          articleId: article.id
+        }
       });
     },
     readMore() {
@@ -143,7 +143,7 @@ export default {
             this.pageNum++;
             $vm.total = res.data.total;
           } else {
-            $vm.$notification.warn({ message: "到底啦" });
+            $vm.$notification.warn({ message: '到底啦' });
           }
         }
       });
@@ -164,14 +164,11 @@ export default {
         },
         value
       );
-    },
-  },
-  watch: {
-    "$route.query": "$fetch",
+    }
   },
   beforeMount() {
     this.api = new HomeService(this);
-  },
+  }
 };
 </script>
 <style scoped>
