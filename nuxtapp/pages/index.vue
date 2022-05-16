@@ -60,6 +60,19 @@ import NoodbSpin from "@/components/Spin";
 import NoodbBackTop from "@/components/backTop";
 
 export default {
+  head: {
+    title: "noodb个人博客",
+    meta: [
+      { charset: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      {
+        hid: "description",
+        name: "description",
+        content: "my website description",
+      },
+    ],
+    link: [{ rel: "icon", type: "image/x-icon", href: "/img/favicon.ico" }],
+  },
   name: "Home",
   components: {
     NoodbLayout,
@@ -73,7 +86,7 @@ export default {
       pageNum: 1,
       loading: true,
       busy: false,
-      api: new HomeService(this),
+      api: null,
       blogs: [],
       recommendDocs: [
         { name: "vuejs", url: "https://cn.vuejs.org/index.html" },
@@ -93,15 +106,21 @@ export default {
     };
   },
   async fetch() {
-    // await this.$axios({
-    //   url: "/article/all",
-    //   method: "GET",
-    //   params: {
-    //     pageNum: 1,
-    //     pageSize: 15,
-    //     searchValue: null,
-    //   },
-    // });
+    await this.$axios({
+      url: "/api/article/all",
+      method: "GET",
+      params: {
+        pageNum: 1,
+        pageSize: 15,
+        searchValue: null,
+      },
+    }).then((res) => {
+      if (res.data.code === 0) {
+        this.blogs = res.data.data.records;
+        this.total = res.data.data.total;
+      }
+      this.loading = false;
+    });
   },
   fetchOnServe: true,
   methods: {
@@ -147,16 +166,11 @@ export default {
       );
     },
   },
+  watch: {
+    "$route.query": "$fetch",
+  },
   beforeMount() {
-    document.title = "noodb个人博客";
-    // const $vm = this;
-    // this.api.getAllArticleSummary(this.pageNum, this.pageSize, (res) => {
-    //   if (res.code === 0) {
-    //     $vm.blogs = res.data.records;
-    //     $vm.total = res.data.total;
-    //   }
-    //   $vm.loading = false;
-    // });
+    this.api = new HomeService(this);
   },
 };
 </script>
