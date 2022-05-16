@@ -42,7 +42,9 @@
           </div>
           <a-list-item slot="renderItem" slot-scope="item">
             <a-list-item-meta :description="item.summary">
-              <a slot="title" @click="clickOnArticle(item)">{{ item.title }}</a>
+              <NuxtLink :to="`/blog/${item.id}`" slot="title">
+                {{ item.title }}
+              </NuxtLink>
             </a-list-item-meta>
           </a-list-item>
         </a-list>
@@ -54,7 +56,6 @@
 
 <script>
 import NoodbLayout from '@/components/Layout';
-// import router from '@/router';
 import HomeService from '@/assets/js/homeService';
 import NoodbSpin from '@/components/Spin';
 import NoodbBackTop from '@/components/backTop';
@@ -122,7 +123,6 @@ export default {
       this.loading = false;
     });
   },
-  fetchOnServe: true,
   methods: {
     clickOnArticle(article) {
       // 跳转到文章详情页面，并且通过参数传递文章id

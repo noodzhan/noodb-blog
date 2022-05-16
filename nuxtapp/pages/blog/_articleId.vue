@@ -32,18 +32,20 @@ import NoodbBackTop from '@/components/backTop';
 import MarkedWrapper from '@/assets/js/MarkedWrapper';
 
 export default {
-  head: {
-    title: this,
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      {
-        hid: 'description',
-        name: 'description',
-        content: 'my website description'
-      }
-    ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/img/favicon.ico' }]
+  head() {
+    return {
+      title: this.headTitle,
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        {
+          hid: 'description',
+          name: this.headTitle,
+          content: this.summary
+        }
+      ],
+      link: [{ rel: 'icon', type: 'image/x-icon', href: '/img/favicon.ico' }]
+    };
   },
   name: 'Article',
   components: {
@@ -56,12 +58,12 @@ export default {
       loading: true,
       md: '',
       articleId: '',
+      headTitle: '',
       titles: [],
       travelNodeList: [],
       markedWrapper: null
     };
   },
-  fetchOnServe: true,
   async fetch() {
     this.loading = true;
     // 1. 从路由中获取文章id
@@ -75,11 +77,11 @@ export default {
     }).then((res) => {
       if (res.data.code === 0 && res.data && res.data.data) {
         this.articleId = res.data.data.id;
+        this.headTitle = res.data.data.title;
+        this.summary = res.data.data.summary;
         this.markedWrapper.setSrc(res.data.data.content);
         this.md = this.markedWrapper.renderer();
         this.titles = this.markedWrapper.getHeaderList();
-        // 设置网页title
-        // document.title = res.data.data.title;
       } else {
         this.$notification.warning({ message: '当前博客不存在' });
         this.$router.push('/home');
@@ -91,7 +93,7 @@ export default {
   beforeMount() {},
   methods: {
     editMd() {
-      router.push({
+      this.$router.push({
         path: 'edit/' + this.articleId,
         params: {
           articleId: this.articleId

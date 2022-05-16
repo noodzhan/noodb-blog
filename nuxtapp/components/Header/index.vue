@@ -4,7 +4,7 @@
       <img src="../../assets/img/logo.png" height="70%" @click="clickLogo" />
 
       <a-input-search
-        style="width: 200px;margin-left: auto"
+        style="width: 200px; margin-left: auto"
         v-show="isShowSearch"
         @search="onSearch"
       ></a-input-search>
@@ -54,10 +54,10 @@ export default {
   },
   methods: {
     clickLogo() {
-      router.push('/');
+      this.$router.push('/');
     },
     clickWriteArticle() {
-      router.push('/blog/edit/new');
+      this.$router.push('/blog/edit/new');
     },
     onSearch(value) {
       this.$emit('headSearch', value);
