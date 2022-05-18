@@ -11,7 +11,7 @@ export function isPhoneScreen() {
 }
 export function debounce(func, time) {
   let timer;
-  return function() {
+  return function () {
     if (timer) {
       clearTimeout(timer);
     }
