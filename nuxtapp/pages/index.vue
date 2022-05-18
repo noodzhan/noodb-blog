@@ -42,9 +42,9 @@
           </div>
           <a-list-item slot="renderItem" slot-scope="item">
             <a-list-item-meta :description="item.summary">
-              <NuxtLink :to="`/blog/${item.id}`" slot="title">
+              <a :href="`/blog/${item.id}`" slot="title">
                 {{ item.title }}
-              </NuxtLink>
+              </a>
             </a-list-item-meta>
           </a-list-item>
         </a-list>
