@@ -73,16 +73,42 @@ java -jar -Dspring.profiles.active=dev back-end.jar
 
 ### 部署
 
-前端
+### 前端
 
 ```shell
 scp -i ~/.ssh/id_rsa -r /Users/noodzhan/IdeaProjects/noodb/front-end/dist ubuntu@1.15.231.74:/home/ubuntu/nblog/front-end
 ```
 
-后台
+#### 后台
 
 ```shell
 
 scp -i ~/.ssh/id_rsa /Users/noodzhan/IdeaProjects/noodb/back-end/build/libs/back-end-1.0.0.jar ubuntu@1.15.231.74:/home/ubuntu/nblog/noodb-blog-jar
 
+```
+
+#### 部署nuxtapp
+
+1. 上传到服务器
+
+```shell
+scp -i ~/.ssh/id_rsa ./.nuxt nuxt.config.js package.json package-lock.json ./static ubuntu@1.15.231.74:/home/ubuntu/nblog/nuxtapp
+```
+
+2. 进入相关目录
+
+```shell
+cd /home/ubuntu/nblog/nuxtapp
+```
+
+3. 安装依赖
+
+```shell
+npm install
+```
+
+4. 后台执行nuxt
+
+```shell
+nohup npm run start &
 ```
