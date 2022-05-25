@@ -112,3 +112,33 @@ npm install
 ```shell
 nohup npm run start &
 ```
+
+5. 验证是否启动
+
+```shell
+curl http://localhost:3000
+```
+
+注意： 杀掉npm进程，可能没有用。必须杀掉3000端口占用的进程。
+
+查看端口占用进程
+
+```shell
+lsof -i:3000
+```
+
+#### nginx配置
+
+```shell
+scp -i ~/.ssh/id_rsa nblog-nginx.conf ubuntu@1.15.231.74:/etc/nginx/conf.d
+
+```
+
+```shell
+nginx -t 
+```
+
+```shell
+nginx -s reload
+```
+
