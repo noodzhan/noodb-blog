@@ -91,7 +91,6 @@ export default {
     // 3. 将文章数据给this.md
   },
   beforeMount() {
-    console.log(this.$store.state);
   },
   methods: {
     editMd() {

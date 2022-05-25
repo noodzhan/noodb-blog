@@ -80,14 +80,11 @@ export default {
       this.$refs.loginForm.resetFields();
     },
     jumpLastIfRouteHistory($vm) {
-      console.log($vm.$store.state);
       if (
           $vm.$store.state.lastRouteHistory
       ) {
-        console.log('1')
         $vm.$router.push($vm.$store.state.lastRouteHistory);
       } else {
-        console.log('2')
         $vm.$router.push('/');
       }
     }
