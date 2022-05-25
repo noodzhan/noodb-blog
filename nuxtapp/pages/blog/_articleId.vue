@@ -44,7 +44,12 @@ export default {
           content: this.summary
         }
       ],
-      link: [{rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}]
+      link: [{rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}],
+      script: [
+        {
+          src: '/baiduStatistic.js'
+        }
+      ]
     };
   },
   name: 'Article',
