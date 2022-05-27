@@ -4,16 +4,12 @@
       <img src="../../assets/img/logo.png" height="70%" @click="clickLogo" />
 
       <a-input-search
-        style="width: 200px; margin-left: auto"
+        class="header-search"
         v-show="isShowSearch"
         @search="onSearch"
       ></a-input-search>
 
-      <a-dropdown
-        style="padding-left: 20px"
-        v-if="isShowPlus"
-        :class="{ 'mobile-plus': !isShowSearch }"
-      >
+      <a-dropdown v-if="isShowPlus" class="header-dropdown">
         <a-icon type="plus"></a-icon>
         <a-menu mode="horizontal" slot="overlay">
           <a-menu-item
@@ -79,8 +75,16 @@ export default {
   .ant-layout-header {
     padding: 0 20px !important;
   }
+  .header-search {
+    display: none;
+  }
+  .header-dropdown {
+    margin-left: 27%;
+  }
 }
-
+.header-dropdown {
+  padding-left: 20px;
+}
 .noodb-logo {
   display: inline-block;
   cursor: pointer;
@@ -114,5 +118,9 @@ export default {
   padding-right: 3%;
   text-decoration: none;
   display: flex;
+}
+.header-search {
+  width: 200px;
+  margin-left: auto;
 }
 </style>

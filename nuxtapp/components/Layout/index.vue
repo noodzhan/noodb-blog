@@ -2,25 +2,15 @@
   <div class="noodb-layout">
     <a-layout>
       <NoodbHeader
-        :is-show-search="isPCComponent"
+        :is-show-search="true"
         @headSearch="onHeadSearch"
       ></NoodbHeader>
       <!--      <a-divider style="top: 64px;position: fixed;z-index: 1"></a-divider>-->
       <a-layout class="noodb-container">
-        <a-layout-sider
-          breakpoint="lg"
-          collapsed-width="0"
-          :trigger="null"
-          theme="light"
-          @breakpoint="breakpoint"
-          v-show="isPCComponent"
-        >
+        <a-layout-sider collapsed-width="0" :trigger="null" theme="light">
           <slot name="side">侧边区</slot>
         </a-layout-sider>
-        <a-layout-content
-          :class="{ 'phone-content': !isPCComponent }"
-          class="noodb-content"
-        >
+        <a-layout-content class="noodb-content">
           <slot name="content">内容区</slot>
         </a-layout-content>
       </a-layout>
@@ -40,20 +30,7 @@ export default {
   components: {
     NoodbHeader
   },
-  data: function () {
-    return {
-      // 控制pc是否显示组件
-      isPCComponent: true
-    };
-  },
   methods: {
-    breakpoint(broken) {
-      if (broken) {
-        this.isPCComponent = false;
-      } else {
-        this.isPCComponent = true;
-      }
-    },
     clickLogo() {
       router.push('/');
     },
@@ -82,21 +59,11 @@ export default {
   z-index: 1;
 }
 
-.phone-content {
-  margin-left: 0px !important;
-}
-
 .noodb-layout .ant-layout-content {
   background: white;
   padding: 0 2em;
   margin-left: 200px;
   min-height: calc(100vh - 128px);
-}
-
-@media screen and (min-width: 960px) {
-  .noodb-content {
-    padding: 0 10% !important;
-  }
 }
 
 .noodb-layout .ant-layout-footer {
@@ -105,5 +72,24 @@ export default {
 
 >>> .ant-divider-horizontal {
   margin: 0 0;
+}
+
+@media screen and (min-width: 960px) {
+  .noodb-content {
+    padding: 0 10% !important;
+  }
+}
+
+@media (max-width: 960px) {
+  .noodb-layout .ant-layout-content {
+    margin-left: 0px !important;
+  }
+  .ant-layout-sider.ant-layout-sider-light {
+    display: none;
+    background: white;
+  }
+  .noodb-content {
+    padding: 0 10% !important;
+  }
 }
 </style>
