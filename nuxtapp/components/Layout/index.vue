@@ -64,6 +64,7 @@ export default {
   padding: 0 2em;
   margin-left: 200px;
   min-height: calc(100vh - 128px);
+  overflow: hidden;
 }
 
 .noodb-layout .ant-layout-footer {

@@ -4,27 +4,27 @@
       <div>
         <a-card title="推荐文档" :bordered="false">
           <div
-              v-for="(item, index) in recommendDocs"
-              :key="index"
-              class="recommend-book"
+            v-for="(item, index) in recommendDocs"
+            :key="index"
+            class="recommend-book"
           >
             <a :href="item.url">{{ item.name }}</a>
           </div>
         </a-card>
         <a-card title="推荐书籍" :bordered="false">
           <div
-              v-for="(item, index) in recommendBooks"
-              :key="index"
-              class="recommend-book"
+            v-for="(item, index) in recommendBooks"
+            :key="index"
+            class="recommend-book"
           >
             <p>{{ item.name }}</p>
           </div>
         </a-card>
         <a-card title="捐赠支持" :bordered="false">
           <img
-              src="../assets/img/payme.jpeg"
-              width="100%"
-              style="text-align: center"
+            src="../assets/img/payme.jpeg"
+            width="100%"
+            style="text-align: center"
           />
         </a-card>
       </div>
@@ -32,14 +32,12 @@
     <template v-slot:content>
       <div class="home-content">
         <noodb-spin v-if="loading"></noodb-spin>
-        <a-list item-layout="vertical" size="large" :data-source="blogs">
-          <div
-              v-show="blogs.length < total"
-              class="load-more"
-              @click="readMore"
-          >
-            <a slot="loadMore" href="javascript:void(0)">阅读更多</a>
-          </div>
+        <a-list
+          item-layout="vertical"
+          size="large"
+          :data-source="blogs"
+          :pagination="pagination"
+        >
           <a-list-item slot="renderItem" slot-scope="item">
             <a-list-item-meta :description="item.summary">
               <a :href="`/blog/${item.id}`" slot="title">
@@ -49,7 +47,7 @@
           </a-list-item>
         </a-list>
       </div>
-      <noodb-back-top/>
+      <noodb-back-top />
     </template>
   </NoodbLayout>
 </template>
@@ -64,25 +62,26 @@ export default {
   head: {
     title: 'noodb个人博客',
     meta: [
-      {charset: 'utf-8'},
-      {name: 'viewport', content: 'width=device-width, initial-scale=1'},
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
         hid: 'description',
         name: 'noodb个人博客',
         content: 'noodb个人博客'
       }
     ],
-    link: [{rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}, {
-      rel: 'start',
-      type: 'image/x-icon',
-      href: 'www.noodb.com'
-    }],
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      {
+        rel: 'start',
+        href: 'www.noodb.com'
+      }
+    ],
     script: [
       {
         src: '/baiduStatistic.js'
       }
     ]
-
   },
   name: 'Home',
   components: {
@@ -92,27 +91,57 @@ export default {
   },
   data: function () {
     return {
-      total: 0,
-      pageSize: 15,
       pageNum: 1,
+      pagination: {
+        onChange: (page) => {
+          const $vm = this;
+          this.api.getAllArticleSummary(
+            page,
+            this.pagination.pageSize,
+            (res) => {
+              if (res.code === 0) {
+                if (res.data.records.length > 0) {
+                  // Array.prototype.push.apply($vm.blogs, res.data.records)
+                  $vm.blogs = res.data.records;
+                  $vm.pagination.total = res.data.total;
+                } else {
+                  $vm.$notification.warn({ message: '到底啦' });
+                }
+              }
+            }
+          );
+        },
+        pageSize: 15,
+        total: 0
+        // itemRender: (page) => {
+        //   return this.$createElement('a', {
+        //     attrs: {
+        //       href: `/api/article/all?pageNum=1&pageSize=15`
+        //     },
+        //     domProps: {
+        //       innerHTML: page
+        //     }
+        //   });
+        // }
+      },
       loading: true,
       busy: false,
       api: null,
       blogs: [],
       recommendDocs: [
-        {name: 'vuejs', url: 'https://cn.vuejs.org/index.html'},
-        {name: 'spring', url: 'https://spring.io/'},
+        { name: 'vuejs', url: 'https://cn.vuejs.org/index.html' },
+        { name: 'spring', url: 'https://spring.io/' },
         {
           name: 'mdn web docs ',
           url: 'https://developer.mozilla.org/zh-CN/docs/Learn'
         },
-        {name: 'stackoverflow', url: 'https://stackoverflow.com/'}
+        { name: 'stackoverflow', url: 'https://stackoverflow.com/' }
       ],
       recommendBooks: [
-        {name: 'JavaScript高级程序设计'},
-        {name: '深入迁出vuejs'},
-        {name: '代码之道'},
-        {name: '面向对象葵花宝典'}
+        { name: 'JavaScript高级程序设计' },
+        { name: '深入迁出vuejs' },
+        { name: '代码之道' },
+        { name: '面向对象葵花宝典' }
       ]
     };
   },
@@ -128,7 +157,7 @@ export default {
     }).then((res) => {
       if (res.data.code === 0) {
         this.blogs = res.data.data.records;
-        this.total = res.data.data.total;
+        this.pagination.total = res.data.data.total;
       }
       this.loading = false;
     });
@@ -143,36 +172,21 @@ export default {
         }
       });
     },
-    readMore() {
-      const $vm = this;
-      this.api.getAllArticleSummary(this.pageNum + 1, this.pageSize, (res) => {
-        if (res.code === 0) {
-          if (res.data.records.length > 0) {
-            // Array.prototype.push.apply($vm.blogs, res.data.records)
-            $vm.blogs = $vm.blogs.concat(res.data.records);
-            this.pageNum++;
-            $vm.total = res.data.total;
-          } else {
-            $vm.$notification.warn({message: '到底啦'});
-          }
-        }
-      });
-    },
     onHeadSearch(value) {
       // console.log(value)
       const $vm = this;
       // 暂时搜索不支持分页。
       this.api.getAllArticleSummary(
-          1,
-          this.pageSize,
-          (res) => {
-            if (res.code === 0) {
-              $vm.blogs = res.data.records;
-              $vm.total = res.data.total;
-            }
-            $vm.loading = false;
-          },
-          value
+        1,
+        this.pagination.pageSize,
+        (res) => {
+          if (res.code === 0) {
+            $vm.blogs = res.data.records;
+            $vm.pagination.total = res.data.total;
+          }
+          $vm.loading = false;
+        },
+        value
       );
     }
   },
@@ -231,5 +245,8 @@ export default {
 
 .home-content {
   min-height: 80vh;
+}
+/deep/ .ant-list-pagination {
+  padding-bottom: 25px;
 }
 </style>
