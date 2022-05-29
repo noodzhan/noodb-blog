@@ -32,12 +32,14 @@
     <template v-slot:content>
       <div class="home-content">
         <noodb-spin v-if="loading"></noodb-spin>
-        <a-list
-          item-layout="vertical"
-          size="large"
-          :data-source="blogs"
-          :pagination="pagination"
-        >
+        <a-list item-layout="vertical" size="large" :data-source="blogs">
+          <div
+            v-show="blogs.length < total"
+            class="load-more"
+            @click="readMore"
+          >
+            <a slot="loadMore" href="javascript:void(0)">阅读更多</a>
+          </div>
           <a-list-item slot="renderItem" slot-scope="item">
             <a-list-item-meta :description="item.summary">
               <a :href="`/blog/${item.id}`" slot="title">
@@ -74,6 +76,7 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       {
         rel: 'start',
+        type: 'image/x-icon',
         href: 'www.noodb.com'
       }
     ],
@@ -91,39 +94,9 @@ export default {
   },
   data: function () {
     return {
+      total: 0,
+      pageSize: 15,
       pageNum: 1,
-      pagination: {
-        onChange: (page) => {
-          const $vm = this;
-          this.api.getAllArticleSummary(
-            page,
-            this.pagination.pageSize,
-            (res) => {
-              if (res.code === 0) {
-                if (res.data.records.length > 0) {
-                  // Array.prototype.push.apply($vm.blogs, res.data.records)
-                  $vm.blogs = res.data.records;
-                  $vm.pagination.total = res.data.total;
-                } else {
-                  $vm.$notification.warn({ message: '到底啦' });
-                }
-              }
-            }
-          );
-        },
-        pageSize: 15,
-        total: 0
-        // itemRender: (page) => {
-        //   return this.$createElement('a', {
-        //     attrs: {
-        //       href: `/api/article/all?pageNum=1&pageSize=15`
-        //     },
-        //     domProps: {
-        //       innerHTML: page
-        //     }
-        //   });
-        // }
-      },
       loading: true,
       busy: false,
       api: null,
@@ -157,7 +130,7 @@ export default {
     }).then((res) => {
       if (res.data.code === 0) {
         this.blogs = res.data.data.records;
-        this.pagination.total = res.data.data.total;
+        this.total = res.data.data.total;
       }
       this.loading = false;
     });
@@ -172,17 +145,32 @@ export default {
         }
       });
     },
+    readMore() {
+      const $vm = this;
+      this.api.getAllArticleSummary(this.pageNum + 1, this.pageSize, (res) => {
+        if (res.code === 0) {
+          if (res.data.records.length > 0) {
+            // Array.prototype.push.apply($vm.blogs, res.data.records)
+            $vm.blogs = $vm.blogs.concat(res.data.records);
+            this.pageNum++;
+            $vm.total = res.data.total;
+          } else {
+            $vm.$notification.warn({ message: '到底啦' });
+          }
+        }
+      });
+    },
     onHeadSearch(value) {
       // console.log(value)
       const $vm = this;
       // 暂时搜索不支持分页。
       this.api.getAllArticleSummary(
         1,
-        this.pagination.pageSize,
+        this.pageSize,
         (res) => {
           if (res.code === 0) {
             $vm.blogs = res.data.records;
-            $vm.pagination.total = res.data.total;
+            $vm.total = res.data.total;
           }
           $vm.loading = false;
         },
@@ -245,8 +233,5 @@ export default {
 
 .home-content {
   min-height: 80vh;
-}
-/deep/ .ant-list-pagination {
-  padding-bottom: 25px;
 }
 </style>
