@@ -20,19 +20,19 @@ jobs:
 
     steps:
       - name: checkout master
-      - uses: actions/checkout@master
+        uses: actions/checkout@master
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/checkout@master
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
       - name: build front-end
-      - run: |
+        run: |
           cd ./front-end
           npm install --legacy-peer-deps
           npm run build
       - name: build nuxapp
-      - run: |
+        run: |
           cd ./nuxtapp
           npm install --legacy-peer-deps
           npm run build
