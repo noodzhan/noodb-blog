@@ -43,6 +43,11 @@ export default {
           hid: 'description',
           name: this.headTitle,
           content: this.summary
+        },
+        {
+          hid: 'keywords',
+          name: this.headTitle,
+          content: this.$serverUtil.keywords() + ',' + this.summary
         }
       ],
       link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
@@ -135,6 +140,6 @@ export default {
   font-weight: 600;
   margin: 0;
   word-break: break-all;
-  text-align: center;
+  padding-bottom: 20px;
 }
 </style>

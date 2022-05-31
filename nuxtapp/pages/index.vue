@@ -61,30 +61,37 @@ import NoodbSpin from '@/components/Spin';
 import NoodbBackTop from '@/components/backTop';
 
 export default {
-  head: {
-    title: 'noodb个人博客',
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      {
-        hid: 'description',
-        name: 'noodb个人博客',
-        content: 'noodb个人博客'
-      }
-    ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      {
-        rel: 'start',
-        type: 'image/x-icon',
-        href: 'www.noodb.com'
-      }
-    ],
-    script: [
-      {
-        src: '/baiduStatistic.js'
-      }
-    ]
+  head() {
+    return {
+      title: 'noodb个人博客',
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        {
+          hid: 'description',
+          name: 'noodb个人博客',
+          content: 'noodb个人博客'
+        },
+        {
+          hid: 'keywords',
+          name: 'noodb个人博客',
+          content: this.$serverUtil.keywords()
+        }
+      ],
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        {
+          rel: 'start',
+          type: 'image/x-icon',
+          href: 'www.noodb.com'
+        }
+      ],
+      script: [
+        {
+          src: '/baiduStatistic.js'
+        }
+      ]
+    };
   },
   name: 'Home',
   components: {
