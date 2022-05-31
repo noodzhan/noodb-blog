@@ -2,7 +2,7 @@
 
 ## 设计初衷
 
-开发该个人博客网站，主要是为了记录工作或学习中的，一些个人笔记，便于以后出现问题可以快速定位；设计初衷就是为了类似wiki一样，留下一些个人学习记录。以后有时间，查询改为全文检索。
+开发该个人博客网站，主要是为了记录工作或学习中的，一些个人笔记，便于以后出现问题可以快速定位；设计初衷就是为了类似 wiki 一样，留下一些个人学习记录。以后有时间，查询改为全文检索。
 
 ## 总体预览
 
@@ -20,7 +20,7 @@
     gradle 7.1.1
     vue 2.6.11
     antd 1.7.7
-    marked 2.0.7 
+    marked 2.0.7
     mavon-editor 2.9.1
 
 ### 更新日志
@@ -45,8 +45,8 @@
 
 ### 1.0.1 （版本计划）
 
-1. 【优化】使用nuxt实现服务端渲染
-2. 【优化】搜索使用lucene
+1. 【优化】使用 nuxt 实现服务端渲染
+2. 【优化】搜索使用 lucene
 3. 【新增】引用百度统计来统计博客的访问量。
 
 ### 项目启动
@@ -68,7 +68,7 @@ npm run serve
 开发启动
 
 ```shell
-java -jar -Dspring.profiles.active=dev back-end.jar 
+java -jar -Dspring.profiles.active=dev back-end.jar
 ```
 
 ### 部署
@@ -87,12 +87,12 @@ scp -i ~/.ssh/id_rsa /Users/noodzhan/IdeaProjects/noodb/back-end/build/libs/back
 
 ```
 
-#### 部署nuxtapp
+#### 部署 nuxtapp
 
 1. 上传到服务器
 
 ```shell
-scp -i ~/.ssh/id_rsa ./.nuxt nuxt.config.js package.json package-lock.json ./static ubuntu@1.15.231.74:/home/ubuntu/nblog/nuxtapp
+scp -i ~/.ssh/id_rsa -r ./.nuxt nuxt.config.js package.json package-lock.json ./static ubuntu@1.15.231.74:/home/ubuntu/nblog/nuxtapp
 ```
 
 2. 进入相关目录
@@ -107,7 +107,7 @@ cd /home/ubuntu/nblog/nuxtapp
 npm install
 ```
 
-4. 后台执行nuxt
+4. 后台执行 nuxt
 
 ```shell
 nohup npm run start &
@@ -119,7 +119,7 @@ nohup npm run start &
 curl http://localhost:3000
 ```
 
-注意： 杀掉npm进程，可能没有用。必须杀掉3000端口占用的进程。
+注意： 杀掉 npm 进程，可能没有用。必须杀掉 3000 端口占用的进程。
 
 查看端口占用进程
 
@@ -127,7 +127,7 @@ curl http://localhost:3000
 lsof -i:3000
 ```
 
-#### nginx配置
+#### nginx 配置
 
 ```shell
 scp -i ~/.ssh/id_rsa nblog-nginx.conf ubuntu@1.15.231.74:/etc/nginx/conf.d
@@ -135,10 +135,9 @@ scp -i ~/.ssh/id_rsa nblog-nginx.conf ubuntu@1.15.231.74:/etc/nginx/conf.d
 ```
 
 ```shell
-nginx -t 
+nginx -t
 ```
 
 ```shell
 nginx -s reload
 ```
-
