@@ -41,13 +41,17 @@ export default {
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         {
           hid: 'description',
-          name: this.headTitle,
+          name: 'description',
           content: this.summary
         },
         {
           hid: 'keywords',
-          name: this.headTitle,
-          content: this.$serverUtil.keywords() + ',' + this.summary
+          name: 'keywords',
+          content: Array.of(
+            this.$serverUtil.keywords(),
+            this.headTitle,
+            this.$serverUtil.trim(this.summary)
+          ).join(',')
         }
       ],
       link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
