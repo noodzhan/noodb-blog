@@ -4,11 +4,11 @@
       <div class="left-catalog">
         <a-anchor :offsetTop="70">
           <a-anchor-link
-              v-for="(item, index) in titles"
-              :href="'#' + item.id"
-              :key="index"
-              :title="item.title"
-              :style="{ 'padding-left': 10 * item.level + 'px' }"
+            v-for="(item, index) in titles"
+            :href="'#' + item.id"
+            :key="index"
+            :title="item.title"
+            :style="{ 'padding-left': 10 * item.level + 'px' }"
           />
         </a-anchor>
       </div>
@@ -16,12 +16,13 @@
     <template v-slot:content>
       <div>
         <a-tooltip placement="bottomLeft" title="编辑">
-          <a-icon type="edit" @click="editMd" class="noodb-edit-icon"/>
+          <a-icon type="edit" @click="editMd" class="noodb-edit-icon" />
         </a-tooltip>
-        <div id="md" v-html="md"/>
+        <div class="article-title">{{ headTitle }}</div>
+        <div id="md" v-html="md" />
         <noodb-spin v-if="loading"></noodb-spin>
       </div>
-      <noodb-back-top/>
+      <noodb-back-top />
     </template>
   </NoodbLayout>
 </template>
@@ -36,15 +37,15 @@ export default {
     return {
       title: this.headTitle,
       meta: [
-        {charset: 'utf-8'},
-        {name: 'viewport', content: 'width=device-width, initial-scale=1'},
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         {
           hid: 'description',
           name: this.headTitle,
           content: this.summary
         }
       ],
-      link: [{rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}],
+      link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
       script: [
         {
           src: '/baiduStatistic.js'
@@ -78,7 +79,7 @@ export default {
     await this.$http({
       url: this.$appUrl + this.autoPrefix() + '/article/one',
       method: 'GET',
-      params: {id: this.$router.currentRoute.params.articleId}
+      params: { id: this.$router.currentRoute.params.articleId }
     }).then((res) => {
       if (res.data.code === 0 && res.data && res.data.data) {
         this.articleId = res.data.data.id;
@@ -88,15 +89,14 @@ export default {
         this.md = this.markedWrapper.renderer();
         this.titles = this.markedWrapper.getHeaderList();
       } else {
-        this.$notification.warning({message: '当前博客不存在'});
+        this.$notification.warning({ message: '当前博客不存在' });
         this.$router.push('/home');
       }
       this.loading = false;
     });
     // 3. 将文章数据给this.md
   },
-  beforeMount() {
-  },
+  beforeMount() {},
   methods: {
     editMd() {
       this.$router.push({
@@ -127,5 +127,14 @@ export default {
   right: 0;
   padding-right: 3vw;
   padding-top: 10px;
+}
+.article-title {
+  font-size: 28px;
+  word-wrap: break-word;
+  color: #222226;
+  font-weight: 600;
+  margin: 0;
+  word-break: break-all;
+  text-align: center;
 }
 </style>
