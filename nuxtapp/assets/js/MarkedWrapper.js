@@ -1,6 +1,7 @@
 import Marked from 'marked';
 import HighLight from 'highlight.js';
 import { cleanUrl } from 'marked/src/helpers';
+import 'highlight.js/styles/github.css';
 
 export default class MarkedWrapper {
   constructor(src) {
