@@ -19,7 +19,7 @@
           <a-icon type="edit" @click="editMd" class="noodb-edit-icon" />
         </a-tooltip>
         <div class="article-title">{{ headTitle }}</div>
-        <div id="md" v-html="md" />
+        <div id="md" v-html="md" class="markdown-body" />
         <noodb-spin v-if="loading"></noodb-spin>
       </div>
       <noodb-back-top />
@@ -30,7 +30,10 @@
 import NoodbLayout from '@/components/Layout';
 import NoodbSpin from '@/components/Spin';
 import NoodbBackTop from '@/components/backTop';
-import MarkedWrapper from '@/assets/js/MarkedWrapper';
+import Markdownit from 'markdown-it';
+import hljs from 'highlight.js';
+import 'highlight.js/styles/github.css';
+import 'mavon-editor/dist/markdown/github-markdown.min.css';
 
 export default {
   head() {
@@ -75,8 +78,7 @@ export default {
       articleId: '',
       headTitle: '',
       titles: [],
-      travelNodeList: [],
-      markedWrapper: null
+      travelNodeList: []
     };
   },
   async fetch() {
@@ -84,7 +86,6 @@ export default {
     // 1. 从路由中获取文章id
     // console.log(this.$route.params.articleId)
     // 2. 发起网络请求获取数据
-    this.markedWrapper = new MarkedWrapper();
     await this.$http({
       url: this.$appUrl + this.autoPrefix() + '/article/one',
       method: 'GET',
@@ -94,9 +95,30 @@ export default {
         this.articleId = res.data.data.id;
         this.headTitle = res.data.data.title;
         this.summary = res.data.data.summary;
-        this.markedWrapper.setSrc(res.data.data.content);
-        this.md = this.markedWrapper.renderer();
-        this.titles = this.markedWrapper.getHeaderList();
+        // this.markedWrapper.setSrc(res.data.data.content);
+        // this.md = this.markedWrapper.renderer();
+        // this.titles = this.markedWrapper.getHeaderList();
+        // mavon.getMarkdownIt().render('# id ### mm');
+        // this.md = mavon.render('#id');
+        let markdown = new Markdownit({
+          html: true, // Enable HTML tags in source
+          xhtmlOut: true, // Use '/' to close single tags (<br />).
+          breaks: true, // Convert '\n' in paragraphs into <br>
+          langPrefix: 'lang-', // CSS language prefix for fenced blocks. Can be
+          linkify: true, // 自动识别url
+          typographer: true,
+          quotes: '“”‘’',
+          highlight: function (str, lang) {
+            if (lang && hljs.getLanguage(lang)) {
+              try {
+                return hljs.highlight(str, { language: lang }).value;
+              } catch (__) {}
+            }
+
+            return ''; // use external default escaping
+          }
+        });
+        this.md = markdown.render(res.data.data.content);
       } else {
         this.$notification.warning({ message: '当前博客不存在' });
         this.$router.push('/home');

@@ -9,10 +9,11 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
     "ant-design-vue": "^1.7.7",
-    "nuxt": "^2.14.5",
     "highlight.js": "^11.1.0",
+    "markdown-it": "^13.0.1",
     "marked": "^2.0.7",
-    "mavon-editor": "^2.9.1"
+    "mavon-editor": "^2.9.1",
+    "nuxt": "^2.14.5"
   },
   "devDependencies": {
     "@nuxtjs/proxy": "^2.1.0"
