@@ -95,11 +95,6 @@ export default {
         this.articleId = res.data.data.id;
         this.headTitle = res.data.data.title;
         this.summary = res.data.data.summary;
-        // this.markedWrapper.setSrc(res.data.data.content);
-        // this.md = this.markedWrapper.renderer();
-        // this.titles = this.markedWrapper.getHeaderList();
-        // mavon.getMarkdownIt().render('# id ### mm');
-        // this.md = mavon.render('#id');
         let markdown = new Markdownit({
           html: true, // Enable HTML tags in source
           xhtmlOut: true, // Use '/' to close single tags (<br />).
@@ -118,6 +113,26 @@ export default {
             return ''; // use external default escaping
           }
         });
+        let index = 0;
+        let $vm = this;
+        markdown.renderer.rules.heading_open = function (
+          tokens,
+          idx,
+          options,
+          env,
+          self
+        ) {
+          let level = tokens[idx].markup.split('#').length - 1;
+          let content = tokens[idx + 1].content;
+          if (content) {
+            $vm.titles.push({
+              id: index,
+              title: content,
+              level: level
+            });
+          }
+          return '<h' + level + ' id="' + index++ + '">';
+        };
         this.md = markdown.render(res.data.data.content);
       } else {
         this.$notification.warning({ message: '当前博客不存在' });
