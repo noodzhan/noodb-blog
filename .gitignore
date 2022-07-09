@@ -1,11 +1,9 @@
 /back-end/build/
-/front-end/node_modules/
-/front-end/dist/
 /.idea
 /.gradle
+/**/**/node_modules
+/**/**/dist
 front-end/package-lock.json
-nuxtapp/node_modules
 nuxtapp/.nuxt
 temp/*
 back-end/bin/*
-

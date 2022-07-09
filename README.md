@@ -141,3 +141,41 @@ nginx -t
 ```shell
 nginx -s reload
 ```
+
+### tamperMonkey
+
+#### 使用背景
+
+主要是 chrome 的 cookie 信息，来利用`https://github.com/wechatsync/Wechatsync`这个库来实现，一键 publish ，同步到各个博客网站。
+
+#### 开发环境整理
+
+1. 复制下面到 tamperMonkey 的 js 里面
+
+```js
+// ==UserScript==
+// @name         axios_test
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  try to take over the world!
+// @author       You
+// @match        https://noodb.com/*
+// @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+// @grant        none
+// ==/UserScript==
+
+(function () {
+  "use strict";
+  console.error("test");
+  if (location.href === "http://localhost:8080/") return;
+  var script = document.createElement("script");
+  script.src = "http://localhost:8080/main.bundle.js";
+  document.body.appendChild(script);
+})();
+```
+
+2. 进入 tool 文件夹里面，执行
+
+```
+npm run serve
+```
