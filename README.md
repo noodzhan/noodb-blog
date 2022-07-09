@@ -6,11 +6,11 @@
 
 ## 总体预览
 
-![img.png](document/REAEME_preview_home.png)
+![img.png](doc/REAEME_preview_home.png)
 
-![img_1.png](document/README_preview_edit.png)
+![img_1.png](doc/README_preview_edit.png)
 
-![img_2.png](document/README_preview_login.png)
+![img_2.png](doc/README_preview_login.png)
 
 ### 技术实现
 
@@ -22,6 +22,7 @@
     antd 1.7.7
     marked 2.0.7
     mavon-editor 2.9.1
+    nuxt 2.14.5
 
 ### 更新日志
 
@@ -48,6 +49,10 @@
 1. 【优化】使用 nuxt 实现服务端渲染
 2. 【优化】搜索使用 lucene
 3. 【新增】引用百度统计来统计博客的访问量。
+4. 【优化】使用markdown-it渲染markdown语法，markedjs渲染太丑。
+5. 【新增】实现自动部署nuxtapp
+6. 【新增】github添加CI
+7. 【新增】优化SEO
 
 ### 项目启动
 

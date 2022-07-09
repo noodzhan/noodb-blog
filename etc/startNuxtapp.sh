@@ -1,8 +1,8 @@
 #!/bin/bash
 cd /home/ubuntu/nblog/nuxtapp
-npm install
 echo "node pid:" $(lsof -i:3000 | awk '{print $2}' | sed 1d)
 kill -9 $(lsof -i:3000 | awk '{print $2}' | sed 1d)
+npm install
 echo 'start nuxt ...'
 nohup npm run start &
 echo 'sleep 30s ...'
