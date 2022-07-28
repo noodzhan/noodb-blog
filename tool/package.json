@@ -5,7 +5,7 @@
   "main": "index",
   "scripts": {
     "build": "webpack --config webpack.config.js",
-    "serve":"webpack serve"
+    "serve": "webpack serve"
   },
   "keywords": [
     "noodzhan",
@@ -14,7 +14,9 @@
   "author": "noodzhan",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.27.2"
+    "axios": "^0.27.2",
+    "crypto-js": "^4.1.1",
+    "request": "^2.88.2"
   },
   "devDependencies": {
     "webpack": "^5.73.0",
