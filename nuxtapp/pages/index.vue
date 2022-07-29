@@ -1,33 +1,7 @@
 <template>
   <NoodbLayout @headSearch="onHeadSearch">
     <template v-slot:side>
-      <div>
-        <a-card title="推荐文档" :bordered="false">
-          <div
-            v-for="(item, index) in recommendDocs"
-            :key="index"
-            class="recommend-book"
-          >
-            <a :href="item.url">{{ item.name }}</a>
-          </div>
-        </a-card>
-        <a-card title="推荐书籍" :bordered="false">
-          <div
-            v-for="(item, index) in recommendBooks"
-            :key="index"
-            class="recommend-book"
-          >
-            <p>{{ item.name }}</p>
-          </div>
-        </a-card>
-        <a-card title="捐赠支持" :bordered="false">
-          <img
-            src="../assets/img/payme.jpeg"
-            width="100%"
-            style="text-align: center"
-          />
-        </a-card>
-      </div>
+      <LeftBar></LeftBar>
     </template>
     <template v-slot:content>
       <div class="home-content">
@@ -59,6 +33,7 @@ import NoodbLayout from '@/components/Layout';
 import HomeService from '@/assets/js/homeService';
 import NoodbSpin from '@/components/Spin';
 import NoodbBackTop from '@/components/backTop';
+import LeftBar from '@/components/LeftBar';
 
 export default {
   head() {
@@ -97,7 +72,8 @@ export default {
   components: {
     NoodbLayout,
     NoodbSpin,
-    NoodbBackTop
+    NoodbBackTop,
+    LeftBar
   },
   data: function () {
     return {
@@ -107,22 +83,7 @@ export default {
       loading: true,
       busy: false,
       api: null,
-      blogs: [],
-      recommendDocs: [
-        { name: 'vuejs', url: 'https://cn.vuejs.org/index.html' },
-        { name: 'spring', url: 'https://spring.io/' },
-        {
-          name: 'mdn web docs ',
-          url: 'https://developer.mozilla.org/zh-CN/docs/Learn'
-        },
-        { name: 'stackoverflow', url: 'https://stackoverflow.com/' }
-      ],
-      recommendBooks: [
-        { name: 'JavaScript高级程序设计' },
-        { name: '深入迁出vuejs' },
-        { name: '代码之道' },
-        { name: '面向对象葵花宝典' }
-      ]
+      blogs: []
     };
   },
   async fetch() {

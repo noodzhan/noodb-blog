@@ -1,7 +1,7 @@
 <template>
   <NoodbLayout>
     <template v-slot:side>
-      <div class="left-catalog">
+      <div class="left-catalog" v-if="titles.length > 0">
         <a-anchor :offsetTop="70">
           <a-anchor-link
             v-for="(item, index) in titles"
@@ -12,9 +12,10 @@
           />
         </a-anchor>
       </div>
+      <LeftBar v-if="titles.length <= 0"></LeftBar>
     </template>
     <template v-slot:content>
-      <div>
+      <div class="content">
         <a-tooltip placement="bottomLeft" title="编辑">
           <a-icon type="edit" @click="editMd" class="noodb-edit-icon" />
         </a-tooltip>
@@ -34,6 +35,7 @@ import Markdownit from 'markdown-it';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/github.css';
 import 'mavon-editor/dist/markdown/github-markdown.min.css';
+import LeftBar from '@/components/LeftBar';
 
 export default {
   head() {
@@ -69,7 +71,8 @@ export default {
   components: {
     NoodbLayout,
     NoodbSpin,
-    NoodbBackTop
+    NoodbBackTop,
+    LeftBar
   },
   data: function () {
     return {
@@ -156,6 +159,9 @@ export default {
 };
 </script>
 <style scoped>
+.content {
+  padding-bottom: 20px;
+}
 .left-catalog {
   padding-left: 20px;
 }
