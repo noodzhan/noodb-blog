@@ -164,7 +164,7 @@ nginx -s reload
 
 #### 使用背景
 
-主要是 chrome 的 cookie 信息，来利用`https://github.com/wechatsync/Wechatsync`这个库来实现，一键 publish ，同步到各个博客网站。
+主要是 chrome 的 cookie 信息，来利用`https://github.com/wechatsync/Wechatsync`这个库来实现，一键 publish ，同步到各个博客网站。不符合后台同步博客的需求。
 
 #### 开发环境整理
 
@@ -183,12 +183,15 @@ nginx -s reload
 // ==/UserScript==
 
 (function () {
-  "use strict";
-  console.error("test");
-  if (location.href === "http://localhost:8080/") return;
-  var script = document.createElement("script");
-  script.src = "http://localhost:8080/main.bundle.js";
-  document.body.appendChild(script);
+    "use strict";
+    console.error("test");
+    if (location.href === "http://localhost:8080/") return;
+        window.onload = function(){
+        var script = document.createElement("script");
+        script.src = "http://localhost:8080/main.bundle.js";
+        document.body.appendChild(script);
+    }
+
 })();
 ```
 

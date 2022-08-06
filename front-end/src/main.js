@@ -1,4 +1,4 @@
-import Vue from 'vue';
+import Vue from 'vue/dist/vue.runtime.esm';
 import App from './App.vue';
 import router from '@/router';
 import Antd from 'ant-design-vue';
