@@ -6,14 +6,23 @@ async function axios(config) {
   let GM_xmlhttpRequest = window.GM_xmlhttpRequest;
   return new Promise((resolve, reject) => {
     //tamper monkey插件函数
+    console.log({
+      url: config.url,
+      method: config.method,
+      param: config.param,
+      cookie: config.cookie,
+      data: config.data,
+      responseType: "json",
+      headers: config.headers,
+    });
     GM_xmlhttpRequest({
       url: config.url,
       method: config.method,
       param: config.param,
       cookie: config.cookie,
       data: config,
+      responseType: "json",
       onload: (resp) => {
-        console.log(resp);
         resolve(resp);
       },
       onerror: (error) => {
@@ -26,7 +35,6 @@ async function axios(config) {
 axios.post = async (config) => {
   let confCopy = {};
   Object.assign(confCopy, config);
-  console.log(config, confCopy);
   confCopy.method = "POST";
   if (confCopy.headers) {
     Object.keys(confCopy.headers).includes("cookie");
@@ -35,7 +43,7 @@ axios.post = async (config) => {
       delete confCopy.headers.cookie;
     }
   }
-  await axios(confCopy);
+  return await axios(confCopy);
 };
 
 function generateBlog(problemId, problemContent, code) {
@@ -69,19 +77,18 @@ async function save(problemId, problemContent, code) {
 }
 
 async function login() {
-  return axios
-    .post({
-      url: "https://noodb.com/api/user/login",
-      username: "noodzhan",
-      password: "noodzhan",
-    })
-    .then((resp) => {
-      console.log(resp);
-      if (resp.data.code == 0) {
-        noodbCookie = resp.data.data.cookie;
-        return resp.data.data.cookie;
-      }
-    });
+  return axios({
+    url: "https://noodb.com/api/user/login",
+    method: "POST",
+    data: JSON.stringify({ username: "noodzhan", password: "noodzhan" }),
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
+  }).then((resp) => {
+    console.log(resp);
+    if (resp.data.code == 0) {
+      noodbCookie = resp.data.data.cookie;
+      return resp.data.data.cookie;
+    }
+  });
 }
 
 async function getCookie() {
