@@ -28,4 +28,9 @@ function generateMarkdown() {
   return markdown;
 }
 
+function getprombleTitle() {
+  return document.querySelector("h4 > a").text;
+}
+
+export { getprombleTitle };
 export default generateMarkdown;

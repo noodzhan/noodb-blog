@@ -33,9 +33,9 @@ async function gmRequest(config) {
   });
 }
 
-function generateBlog(problemId, problemContent, code) {
+function generateBlog(problemId, problemContent, code, lang) {
   //TODO 以后考虑一下js格式java代码，如果没有合适的思路，那只能后台实现，通过google java format
-  let content = `# 题目 \n${problemContent} \n# 代码 \n\`\`\`java \n${code}\n\`\`\` `;
+  let content = `# 题目 \n${problemContent} \n# 代码 \n\`\`\`${lang} \n${code}\n\`\`\` `;
   console.log(content);
   return content;
 }
@@ -44,8 +44,8 @@ function isExist() {
   return false;
 }
 
-async function save(problemId, problemContent, code) {
-  let content = generateBlog(problemId, problemContent, code);
+async function save(problemId, problemContent, code, lang) {
+  let content = generateBlog(problemId, problemContent, code, lang);
   if (isExist()) {
     //更新
   }
@@ -55,7 +55,7 @@ async function save(problemId, problemContent, code) {
     method: "POST",
     url: "https://noodb.com/api/article/edit",
     data: JSON.stringify({
-      title: problemId,
+      title: "leetcode -- " + problemId,
       content: content,
     }),
     headers: {
