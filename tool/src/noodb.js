@@ -1,8 +1,6 @@
-// import axios from "axios";
-
 let noodbCookie = "";
 
-async function axios(config) {
+async function gmRequest(config) {
   let GM_xmlhttpRequest = window.GM_xmlhttpRequest;
   return new Promise((resolve, reject) => {
     //tamper monkey插件函数
@@ -12,39 +10,28 @@ async function axios(config) {
       param: config.param,
       cookie: config.cookie,
       data: config.data,
-      responseType: "json",
       headers: config.headers,
+      responseType: "json",
     });
     GM_xmlhttpRequest({
       url: config.url,
       method: config.method,
       param: config.param,
       cookie: config.cookie,
-      data: config,
+      data: config.data,
+      headers: config.headers,
       responseType: "json",
       onload: (resp) => {
-        resolve(resp);
+        console.log(resp);
+        resolve(resp.response);
       },
       onerror: (error) => {
+        console.log(error);
         reject(error);
       },
     });
   });
 }
-
-axios.post = async (config) => {
-  let confCopy = {};
-  Object.assign(confCopy, config);
-  confCopy.method = "POST";
-  if (confCopy.headers) {
-    Object.keys(confCopy.headers).includes("cookie");
-    if (confCopy.headers.cookie) {
-      confCopy.cookie = config.headers.cookie;
-      delete confCopy.headers.cookie;
-    }
-  }
-  return await axios(confCopy);
-};
 
 function generateBlog(problemId, problemContent, code) {
   //TODO 以后考虑一下js格式java代码，如果没有合适的思路，那只能后台实现，通过google java format
@@ -64,29 +51,36 @@ async function save(problemId, problemContent, code) {
   }
   await getCookie();
   //新增
-  return axios.post({
+  return gmRequest({
+    method: "POST",
     url: "https://noodb.com/api/article/edit",
-    data: {
+    data: JSON.stringify({
       title: problemId,
       content: content,
-    },
+    }),
     headers: {
-      cookie: noodbCookie,
+      "Content-Type": "application/json; charset=UTF-8",
+      Accept: "application/json",
     },
+    cookie: noodbCookie,
   });
 }
 
 async function login() {
-  return axios({
+  return gmRequest({
     url: "https://noodb.com/api/user/login",
     method: "POST",
     data: JSON.stringify({ username: "noodzhan", password: "noodzhan" }),
-    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    headers: {
+      "Content-Type": "application/json; charset=UTF-8",
+      Accept: "application/json",
+    },
   }).then((resp) => {
     console.log(resp);
-    if (resp.data.code == 0) {
-      noodbCookie = resp.data.data.cookie;
-      return resp.data.data.cookie;
+    if (resp.code == 0) {
+      noodbCookie = resp.data.token;
+      console.log(noodbCookie);
+      return resp.data.token;
     }
   });
 }
