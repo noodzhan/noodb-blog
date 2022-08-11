@@ -3,16 +3,31 @@ import generateMarkdown, { getprombleTitle } from "./leetcode";
 import save from "./noodb";
 
 function init() {
-  console.log(window.location.href);
-  setTimeout(() => {
-    //页面加载结束，获取markdown
-    window.article = generateMarkdown();
-    window.problemTitle = getprombleTitle();
-    console.log(window.article);
-    console.log(window.problemTitle);
-  }, 500);
+  window.article = generateMarkdown();
+  window.problemTitle = getprombleTitle();
+  console.log(window.article);
+  console.log(window.problemTitle);
 }
-init();
+
+let timer = undefined;
+
+function checkIsRenender() {
+  let href = window.location.href;
+  let regExp = new RegExp("^https://leetcode.cn/problems/");
+  if (!regExp.test(href)) {
+    return;
+  }
+  let dom = document.querySelector(".notranslate .notranslate");
+  if (dom) {
+    init();
+    if (!timer) {
+      clearTimeout(timer);
+    } else {
+      timer = setTimeout(checkIsRenender, 300);
+    }
+  }
+}
+checkIsRenender();
 
 let observerDomArray = document.querySelectorAll("a[href^='/problems/']");
 observerDomArray.forEach((dom) => {
