@@ -200,3 +200,24 @@ nginx -s reload
 ```
 npm run serve
 ```
+
+### 部署calibre
+
+1. 搜索
+```shell
+dokcer search calibre-web
+```
+2. 拉取镜像
+```shell
+docker pull johngong/calibre-web
+```
+3. 启动
+```shell
+docker run -d \
+--name=calibre-web \
+-p 8083:8083 \
+-v /home/ubuntu/calibre-web/config:/config \
+-v /home/ubuntu/calibre-web/library:/library \
+--restart unless-stopped \
+johngong/calibre-web
+```

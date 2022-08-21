@@ -33,6 +33,7 @@ export default {
   data: function () {
     return {
       recommendDocs: [
+        { name: '滴答清单', url: 'https://dida365.com/webapp/#q/all/today' },
         { name: 'vuejs', url: 'https://cn.vuejs.org/index.html' },
         { name: 'spring', url: 'https://spring.io/' },
         {
