@@ -1,6 +1,9 @@
 <template>
   <div>
     <a-card title="推荐文档" :bordered="false">
+      <a slot="extra" href="/blog/1563541035307724801" target="_blank">
+        <a-icon type="link" />
+      </a>
       <div
         v-for="(item, index) in recommendDocs"
         :key="index"
@@ -10,6 +13,9 @@
       </div>
     </a-card>
     <a-card title="推荐书籍" :bordered="false">
+      <a slot="extra" href="https://www.noodb.com/books" target="_blank">
+        <a-icon type="link" />
+      </a>
       <div
         v-for="(item, index) in recommendBooks"
         :key="index"
@@ -52,3 +58,8 @@ export default {
   }
 };
 </script>
+<style lang="css" scoped>
+.ant-card-extra a {
+  color: black;
+}
+</style>
