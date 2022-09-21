@@ -33,12 +33,14 @@ spring:
   config:
     activate:
       on-profile: dev
-mybatis-plus:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#mybatis-plus:
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 logging:
   level:
-    com.noodb.blog.mapper: info
+    root: debug
+    com.noodb.blog.mapper: error
+    com.noodb.blog: debug
 article:
   imagePath:
     /Users/noodzhan/IdeaProjects/noodb/back-end/build/

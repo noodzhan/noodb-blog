@@ -186,7 +186,7 @@ nginx -s reload
     "use strict";
     console.error("test");
     if (location.href === "http://localhost:8080/") return;
-        window.onload = function(){
+    window.onload = function () {
         var script = document.createElement("script");
         script.src = "http://localhost:8080/main.bundle.js";
         document.body.appendChild(script);
@@ -204,14 +204,19 @@ npm run serve
 ### 部署calibre
 
 1. 搜索
+
 ```shell
 dokcer search calibre-web
 ```
+
 2. 拉取镜像
+
 ```shell
 docker pull johngong/calibre-web
 ```
+
 3. 启动
+
 ```shell
 docker run -d \
 --name=calibre-web \
@@ -221,3 +226,13 @@ docker run -d \
 --restart unless-stopped \
 johngong/calibre-web
 ```
+
+### 对接springSecurity
+
+1、没有accessToken的请求，操作博客文档，进行拦截。暂时不做权限控制。
+
+2、登录接口颁发accessToken。
+
+1、实现一下这个过滤器。
+
+BearerTokenAuthenticationFilter
