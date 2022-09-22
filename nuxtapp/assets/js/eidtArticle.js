@@ -4,6 +4,11 @@ export default class EditArticleService {
   }
 
   uploadImage(file, articleId, successFn, errorFn) {
+    let token;
+    if (this.$vm.$store.state.isLogin) {
+      token = this.$vm.$store.state.userInfo.token;
+      token = window.btoa(token);
+    }
     const formData = new FormData();
     const articleImage = {};
     articleImage.articleId = articleId;
@@ -17,7 +22,10 @@ export default class EditArticleService {
       .$http({
         url: this.$vm.$appUrl + this.$vm.autoPrefix() + '/article/img',
         method: 'post',
-        data: formData
+        data: formData,
+        headers: {
+          Authorization: 'Bearer ' + token
+        }
       })
       .then(resp => {
         successFn(resp.data);
@@ -28,11 +36,19 @@ export default class EditArticleService {
   }
 
   deleteApi(ids, successFn) {
+    let token;
+    if (this.$vm.$store.state.isLogin) {
+      token = this.$vm.$store.state.userInfo.token;
+      token = window.btoa(token);
+    }
     this.$vm
       .$http({
         url: this.$vm.$appUrl + this.$vm.autoPrefix() + '/article/delete',
         method: 'post',
-        data: ids
+        data: ids,
+        headers: {
+          Authorization: 'Bearer ' + token
+        }
       })
       .then(resp => {
         successFn(resp);

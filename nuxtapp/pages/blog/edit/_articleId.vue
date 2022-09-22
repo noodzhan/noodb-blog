@@ -6,30 +6,30 @@
       <span class="edit-title-span"> 标题：</span>
       <a-input v-model="article.title" style="flex: 2"></a-input>
       <a-button
-          v-if="!isInsertPage"
-          type="danger"
-          style="margin: 0 20px"
-          @click="deleteWrapper"
-      >删除
+        v-if="!isInsertPage"
+        type="danger"
+        style="margin: 0 20px"
+        @click="deleteWrapper"
+        >删除
       </a-button>
       <a-button
-          type="primary"
-          :class="isInsertPage ? 'margin-button' : 'right-margin-button'"
-          @click="saveWrapper"
-      >保存
+        type="primary"
+        :class="isInsertPage ? 'margin-button' : 'right-margin-button'"
+        @click="saveWrapper"
+        >保存
       </a-button>
     </div>
     <mavon-editor
-        v-model="article.content"
-        ref="mavonEditor"
-        :autofocus="true"
-        :scroll-style="true"
-        style="height: 80vh"
-        :toolbars="toolbars"
-        :subfield="!isPhoneScreen"
-        :default-open="isPhoneScreen ? 'edit' : ''"
-        @imgAdd="onImgAdd"
-        @imgDel="onImgDel"
+      v-model="article.content"
+      ref="mavonEditor"
+      :autofocus="true"
+      :scroll-style="true"
+      style="height: 80vh"
+      :toolbars="toolbars"
+      :subfield="!isPhoneScreen"
+      :default-open="isPhoneScreen ? 'edit' : ''"
+      @imgAdd="onImgAdd"
+      @imgDel="onImgDel"
     >
     </mavon-editor>
   </div>
@@ -37,14 +37,14 @@
 <script>
 import NoodbHeader from '@/components/Header';
 import 'highlight.js/styles/github.css';
-import {debounce} from '@/assets/js/utils';
+import { debounce } from '@/assets/js/utils';
 import NoodbSpin from '@/components/Spin';
 import EditArticleService from '@/assets/js/eidtArticle';
 import MavonEditConfig from '@/assets/js/MavonEditorConfig';
 
 export default {
   name: 'Edit',
-  components: {NoodbHeader, NoodbSpin},
+  components: { NoodbHeader, NoodbSpin },
   middleware: 'auth',
   data: function () {
     return {
@@ -93,12 +93,12 @@ export default {
     this.$http({
       url: this.$appUrl + this.autoPrefix() + '/article/one',
       method: 'GET',
-      params: {id: id}
+      params: { id: id }
     }).then((res) => {
       if (res.data.code === 0) {
         this.article = res.data.data;
       } else {
-        this.$notification.warning({message: '系统错误'});
+        this.$notification.warning({ message: '系统错误' });
       }
       this.loading = false;
     });
@@ -107,52 +107,60 @@ export default {
     deleteFn() {
       this.editArticleService.deleteApi([this.article.id], (resp) => {
         if (resp.data.code === 0) {
-          this.$notification.info({message: '删除成功'});
-          this.$router.push('/home');
+          this.$notification.info({ message: '删除成功' });
+          this.$router.push('/');
         }
       });
     },
     save() {
       const $vm = this;
+      let token;
+      if (this.$store.state.isLogin) {
+        token = this.$store.state.userInfo.token;
+        token = window.btoa(token);
+      }
       this.$http({
         url: $vm.$appUrl + $vm.autoPrefix() + '/article/edit',
         method: 'POST',
-        data: $vm.article
+        data: $vm.article,
+        headers: {
+          Authorization: 'Bearer ' + token
+        }
       })
-          .then((res) => {
-            if (res.data.code === 0) {
-              if ($vm.isInsertPage) {
-                $vm.jumpToEditPage(res.data.data);
-              }
-              const href = '/blog/' + res.data.data;
-              $vm.$notification.info({
-                message: (h) => {
-                  return h(
-                      'a',
-                      {
-                        props: {href: href},
-                        on: {
-                          click: () => {
-                            this.$router.push({
-                              path: '/blog/' + res.data.data,
-                              params: {
-                                articleId: res.data.data
-                              }
-                            });
-                          }
-                        }
-                      },
-                      '查看文章'
-                  );
-                }
-              });
-            } else {
-              $vm.$notification.warning({message: '保存失败'});
+        .then((res) => {
+          if (res.data.code === 0) {
+            if ($vm.isInsertPage) {
+              $vm.jumpToEditPage(res.data.data);
             }
-          })
-          .catch(() => {
-            $vm.$notification.error({message: '系统错误'});
-          });
+            const href = '/blog/' + res.data.data;
+            $vm.$notification.info({
+              message: (h) => {
+                return h(
+                  'a',
+                  {
+                    props: { href: href },
+                    on: {
+                      click: () => {
+                        this.$router.push({
+                          path: '/blog/' + res.data.data,
+                          params: {
+                            articleId: res.data.data
+                          }
+                        });
+                      }
+                    }
+                  },
+                  '查看文章'
+                );
+              }
+            });
+          } else {
+            $vm.$notification.warning({ message: '保存失败' });
+          }
+        })
+        .catch(() => {
+          $vm.$notification.error({ message: '系统错误' });
+        });
     },
     jumpToEditPage(id) {
       this.$router.push({
@@ -165,14 +173,14 @@ export default {
     onImgAdd(pos, file) {
       const $vm = this;
       this.editArticleService.uploadImage(
-          file,
-          this.article.id,
-          (resp) => {
-            $vm.$refs.mavonEditor.$img2Url(pos, resp.data.frontUrl);
-          },
-          () => {
-            $vm.$notification.error({message: '上传图片失败'});
-          }
+        file,
+        this.article.id,
+        (resp) => {
+          $vm.$refs.mavonEditor.$img2Url(pos, resp.data.frontUrl);
+        },
+        () => {
+          $vm.$notification.error({ message: '上传图片失败' });
+        }
       );
     },
     onImgDel(pos, file) {

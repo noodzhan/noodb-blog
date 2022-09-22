@@ -34,6 +34,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
   private AuthenticationEntryPoint authenticationEntryPoint = new Http403ForbiddenEntryPoint();
 
+  private String AUTHENTICATION_SCHEME_BEARER = "Bearer";
+
   @Override
   protected void doFilterInternal(
       HttpServletRequest request, HttpServletResponse response, FilterChain chain)
@@ -67,13 +69,13 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
       return null;
     }
     header = header.trim();
-    if (!StringUtils.startsWithIgnoreCase(header, AUTHENTICATION_SCHEME_BASIC)) {
+    if (!StringUtils.startsWithIgnoreCase(header, AUTHENTICATION_SCHEME_BEARER)) {
       return null;
     }
     if (header.equalsIgnoreCase(AUTHENTICATION_SCHEME_BASIC)) {
-      throw new BadCredentialsException("Empty basic authentication token");
+      throw new BadCredentialsException("Empty bearer authentication token");
     }
-    byte[] base64Token = header.substring(6).getBytes(StandardCharsets.UTF_8);
+    byte[] base64Token = header.substring(7).getBytes(StandardCharsets.UTF_8);
     byte[] decoded = decode(base64Token);
     String token = new String(decoded, StandardCharsets.UTF_8);
     User user = JwtUtils.getSubject(User.class, token);
@@ -86,7 +88,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     try {
       return Base64.getDecoder().decode(base64Token);
     } catch (IllegalArgumentException ex) {
-      throw new BadCredentialsException("Failed to decode basic authentication token");
+      throw new BadCredentialsException("Failed to decode bearer authentication token");
     }
   }
 
