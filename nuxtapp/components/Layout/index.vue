@@ -43,6 +43,7 @@ export default {
 
 <style scoped>
 .noodb-layout .ant-layout-sider {
+  display: none;
   padding: 0 1em;
   position: fixed;
   height: 100vh;
@@ -60,7 +61,7 @@ export default {
 }
 
 .noodb-layout .ant-layout-content {
-  background: white;
+  /* background: white; */
   padding: 0 2em;
   margin-left: 200px;
   min-height: calc(100vh - 128px);
