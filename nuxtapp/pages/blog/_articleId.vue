@@ -1,5 +1,5 @@
 <template>
-  <NoodbLayout>
+  <NoodbLayout :hasLeft="true">
     <template v-slot:side>
       <div class="left-catalog" v-if="titles.length > 0">
         <a-anchor :offsetTop="70">

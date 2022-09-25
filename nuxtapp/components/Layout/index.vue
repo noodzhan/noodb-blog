@@ -5,9 +5,13 @@
         :is-show-search="true"
         @headSearch="onHeadSearch"
       ></NoodbHeader>
-      <!--      <a-divider style="top: 64px;position: fixed;z-index: 1"></a-divider>-->
       <a-layout class="noodb-container">
-        <a-layout-sider collapsed-width="0" :trigger="null" theme="light">
+        <a-layout-sider
+          collapsed-width="0"
+          :trigger="null"
+          theme="light"
+          v-if="hasLeft"
+        >
           <slot name="side">侧边区</slot>
         </a-layout-sider>
         <a-layout-content class="noodb-content">
@@ -22,13 +26,18 @@
 </template>
 
 <script>
-// import router from '@/router';
 import NoodbHeader from '@/components/Header';
 
 export default {
   name: 'NoodbLayout',
   components: {
     NoodbHeader
+  },
+  props: {
+    hasLeft: {
+      type: Boolean,
+      default: false
+    }
   },
   methods: {
     clickLogo() {
@@ -43,10 +52,9 @@ export default {
 
 <style scoped>
 .noodb-layout .ant-layout-sider {
-  display: none;
   padding: 0 1em;
   position: fixed;
-  height: 100vh;
+  height: auto;
 }
 
 .noodb-container {
@@ -63,9 +71,13 @@ export default {
 .noodb-layout .ant-layout-content {
   /* background: white; */
   padding: 0 2em;
-  margin-left: 200px;
+  /* margin-left: 200px; */
   min-height: calc(100vh - 128px);
   overflow: hidden;
+}
+
+.ant-layout-sider + main {
+  margin-left: 200px;
 }
 
 .noodb-layout .ant-layout-footer {

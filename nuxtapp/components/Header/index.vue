@@ -174,4 +174,8 @@ export default {
   font-weight: bold;
   color: rgba(0, 0, 0, 0.55);
 }
+/deep/ .anticon.anticon-search.ant-input-search-icon > svg {
+  height: 1.3em;
+  width: 1.3em;
+}
 </style>

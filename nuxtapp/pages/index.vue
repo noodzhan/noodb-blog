@@ -1,8 +1,8 @@
 <template>
   <NoodbLayout @headSearch="onHeadSearch">
-    <!-- <template v-slot:side>
+    <template v-slot:side>
       <LeftBar></LeftBar>
-    </template> -->
+    </template>
     <template v-slot:content>
       <div class="home-content">
         <noodb-spin v-if="loading"></noodb-spin>
