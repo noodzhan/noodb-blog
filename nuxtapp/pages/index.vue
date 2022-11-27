@@ -38,14 +38,14 @@ import LeftBar from '@/components/LeftBar';
 export default {
   head() {
     return {
-      title: 'noodb个人博客',
+      title: 'noodb',
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         {
           hid: 'description',
           name: 'description',
-          content: 'noodb个人博客'
+          content: 'noodb'
         },
         {
           hid: 'keywords',
