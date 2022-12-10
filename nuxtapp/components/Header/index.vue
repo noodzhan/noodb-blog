@@ -1,12 +1,18 @@
 <template>
   <div class="noodb-layout">
     <a-layout-header class="noodb-header">
-      <img src="../../assets/img/logo.png" height="70%" @click="clickLogo" />
+      <img
+        src="../../assets/img/logo.png"
+        height="70%"
+        @click="clickLogo"
+        class="noodb-logo"
+      />
 
       <a-input-search
         class="header-search"
         v-show="isShowSearch"
         @search="onSearch"
+        placeholder="搜索"
       ></a-input-search>
 
       <a-dropdown v-if="isShowPlus" class="header-dropdown">
