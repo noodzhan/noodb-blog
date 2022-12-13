@@ -233,6 +233,9 @@ johngong/calibre-web
 
 2、登录接口颁发accessToken。
 
-1、实现一下这个过滤器。
+3、实现一下这个过滤器。
 
 BearerTokenAuthenticationFilter
+
+### gradle plugin 
+https://docs.spring.io/spring-boot/docs/3.0.0/gradle-plugin/reference/htmlsingle/

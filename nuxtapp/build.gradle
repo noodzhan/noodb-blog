@@ -9,10 +9,11 @@ node {
     download = false
 }
 
-task buildVue(type: NpmTask) {
+task buildNuxt(type: NpmTask) {
     args = ["run", "build"]
 }
 
-task cleanVue(type: Delete){
-    delete './dist'
+task cleanNuxt(type: Delete){
+    delete './.nuxt'
 }
+

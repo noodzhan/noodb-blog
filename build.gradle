@@ -1,6 +1,4 @@
 plugins {
-    id 'org.hidetake.ssh' version '2.10.1'
-    id 'com.noodb.hello-plugin' version '1.0-SNAPSHOT'
 }
 group 'com.noodb'
 version '1.0.0'
@@ -10,31 +8,54 @@ repositories {
     mavenLocal()
     mavenCentral()
 }
+// clean
+tasks.register('clean') {
+    delete './build'
+    description('clean front end !')
+    dependsOn ':front-end:cleanVue'
+    description('clean nuxt !')
+    dependsOn ':nuxtapp:cleanNuxt'
+    description('clean back-end !')
+    dependsOn ':back-end:clean'
+}
 
-//
-tasks.register('depolyServer') {
+// build
+tasks.register('compile') {
+    description('clean front-end & back-end!')
+    dependsOn 'clean'
     description('build front end !')
     dependsOn ':front-end:buildVue'
-    dependsOn ':back-end:build'
+    description('build nuxt!')
+    dependsOn ':nuxtapp:buildNuxt'
+    description('build java !')
+    dependsOn ':back-end:bootJar'
 }
 
-remotes {
-    server {
-        user = System.getProperty("user.name")
-        host = '1.15.231.74'
-        identity = file("${System.getProperty('user.home')}/.ssh/id_rsa")
+// package
+tasks.register('package',Copy) {
+    description('compile....')
+    dependsOn 'compile'
+    mkdir "build/nuxtapp"
+    dependsOn 'copyNuxt'
+    dependsOn 'copyJar'
+
+
+}
+tasks.register("copyNuxt",Copy){
+    //nuxt相关
+    from("./nuxtapp/"){
+        include '.nuxt/**,static/**'
     }
-}
-
-task checkServe {
-    doLast {
-        ssh.run {
-            session(remotes.server) {
-                def check = execute 'ls -al'
-                println check
-            }
-        }
+    from("./nuxtapp/"){
+        include 'static/**'
     }
+    from("./nuxtapp/package.json")
+    from("./nuxtapp/nuxt.config.js")
+    into("./build/nuxtapp")
 }
 
-
+tasks.register("copyJar",Copy){
+    from "back-end/build/libs/"
+    include "*.jar"
+    into("./build")
+}
