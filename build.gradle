@@ -38,6 +38,7 @@ tasks.register('package',Copy) {
     mkdir "build/nuxtapp"
     dependsOn 'copyNuxt'
     dependsOn 'copyJar'
+    dependsOn 'copyConf'
 
 
 }
@@ -54,8 +55,36 @@ tasks.register("copyNuxt",Copy){
     into("./build/nuxtapp")
 }
 
+tasks.register("release"){
+    description("release...")
+    dependsOn 'package'
+    dependsOn 'tarBuild'
+}
+
+tasks.register("tarBuild",Zip){
+    archiveFileName = "${getRootProject().getName()}-${getRootProject().getVersion()}.zip"
+    from "./build"
+    destinationDirectory = getRootProject().getRootDir()
+}
+
 tasks.register("copyJar",Copy){
     from "back-end/build/libs/"
     include "*.jar"
+    into("./build")
+}
+
+tasks.register("copyConf",Copy){
+    from("./back-end"){
+        include "db/**"
+    }
+    from("./"){
+        include "etc/**"
+        include "*.md"
+    }
+
+    from("./front-end/"){
+        include 'dist/**'
+    }
+
     into("./build")
 }

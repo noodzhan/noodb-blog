@@ -57,6 +57,8 @@
 ### 2.0.0
 
 1. 【新增】刷 leetcode 题目，自动同步到本博客。
+2. 【新增】支持gradle自动发release包。
+
 
 ### 需求
 
@@ -67,7 +69,7 @@
 1. 使用 tampermonkey，写一个脚本插件。
 2. 全局拦截一下 LeetCode 的提交代码请求，然后响应正确的话，就直接将代码代码和题目信息，同步到个人博客中。
 
-### 项目启动
+## 启动
 
 数据库脚本
 
@@ -81,6 +83,14 @@ npm install
 npm run serve
 ```
 
+前端 （nuxtapp）
+
+```
+npm install
+
+npm run dev
+```
+
 后台 （back-end）
 
 开发启动
@@ -88,24 +98,22 @@ npm run serve
 ```shell
 java -jar -Dspring.profiles.active=dev back-end.jar
 ```
+## 发布
+在项目的根目录执行下面命令，会在产生release包。
+```shell
+./gradlew release
+```
 
-### 部署
+## 部署
 
-### 前端
+### 前端（不使用服务端渲染）
 
 ```shell
 scp -i ~/.ssh/id_rsa -r /Users/noodzhan/IdeaProjects/noodb/front-end/dist ubuntu@1.15.231.74:/home/ubuntu/nblog/front-end
 ```
 
-#### 后台
 
-```shell
-
-scp -i ~/.ssh/id_rsa /Users/noodzhan/IdeaProjects/noodb/back-end/build/libs/back-end-1.0.0.jar ubuntu@1.15.231.74:/home/ubuntu/nblog/noodb-blog-jar
-
-```
-
-#### 部署 nuxtapp
+### 前端（使用服务端渲染nuxt）
 
 1. 上传到服务器
 
@@ -145,6 +153,19 @@ curl http://localhost:3000
 lsof -i:3000
 ```
 
+### 后台
+
+#### jar
+```shell
+
+scp -i ~/.ssh/id_rsa /Users/noodzhan/IdeaProjects/noodb/back-end/build/libs/back-end-1.0.0.jar ubuntu@1.15.231.74:/home/ubuntu/nblog/noodb-blog-jar
+
+```
+
+```shell
+nohup java -jar -Dspring.profiles.active=dev back-end.jar &
+```
+
 #### nginx 配置
 
 ```shell
@@ -159,8 +180,33 @@ nginx -t
 ```shell
 nginx -s reload
 ```
+#### 部署calibre
 
-### tamperMonkey
+1. 搜索
+
+```shell
+dokcer search calibre-web
+```
+
+2. 拉取镜像
+
+```shell
+docker pull johngong/calibre-web
+```
+
+3. 启动
+
+```shell
+docker run -d \
+--name=calibre-web \
+-p 8083:8083 \
+-v /home/ubuntu/calibre-web/config:/config \
+-v /home/ubuntu/calibre-web/library:/library \
+--restart unless-stopped \
+johngong/calibre-web
+```
+
+## tamperMonkey(插件)
 
 #### 使用背景
 
@@ -201,33 +247,8 @@ nginx -s reload
 npm run serve
 ```
 
-### 部署calibre
+## 安全 (对接springSecurity)
 
-1. 搜索
-
-```shell
-dokcer search calibre-web
-```
-
-2. 拉取镜像
-
-```shell
-docker pull johngong/calibre-web
-```
-
-3. 启动
-
-```shell
-docker run -d \
---name=calibre-web \
--p 8083:8083 \
--v /home/ubuntu/calibre-web/config:/config \
--v /home/ubuntu/calibre-web/library:/library \
---restart unless-stopped \
-johngong/calibre-web
-```
-
-### 对接springSecurity
 
 1、没有accessToken的请求，操作博客文档，进行拦截。暂时不做权限控制。
 
@@ -236,6 +257,3 @@ johngong/calibre-web
 3、实现一下这个过滤器。
 
 BearerTokenAuthenticationFilter
-
-### gradle plugin 
-https://docs.spring.io/spring-boot/docs/3.0.0/gradle-plugin/reference/htmlsingle/
