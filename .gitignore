@@ -7,3 +7,4 @@ front-end/package-lock.json
 nuxtapp/.nuxt
 temp/*
 back-end/bin/*
+/build
