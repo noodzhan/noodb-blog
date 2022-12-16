@@ -1,4 +1,4 @@
-name: Node.js CI
+name: noodb CI
 
 on:
   push:
@@ -15,7 +15,11 @@ jobs:
         with:
           distribution: temurin
           java-version: 11
-
+      - name: setup nodejs
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 12
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
       - name: Execute Gradle build
