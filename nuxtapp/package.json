@@ -2,7 +2,7 @@
   "name": "my-nuxt-project",
   "scripts": {
     "dev": "nuxt",
-    "build": "nuxt build",
+    "build": "npm install && nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate"
   },
