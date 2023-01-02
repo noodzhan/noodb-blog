@@ -257,3 +257,19 @@ npm run serve
 3、实现一下这个过滤器。
 
 BearerTokenAuthenticationFilter
+
+## docker不同容器的网络问题
+1. 容器间要能相互通信，需要同在一个网络中。
+2. docker容器在创建时若不指定网络驱动时会默认归属到bridge网络。
+3. 使用 docker inspect 指令查看两个容器是否同属一个network，如果不是，使用docker network将两个容器连接起来，使他们在同一个网络network里即可。
+4. 查看docker 网络:
+docker network ls
+5. 首先创建一个网络：
+docker network create networkName
+6. 将容器连到创建的网络中（每个容器都要连到这个网络里）：
+docker network connect networkName containerName
+7. 查看网络内的容器信息：
+docker network inspect networkName
+8. 使用docker network --help 获取更多相关操作详情。
+9. 可以在运行容器时直接指定连接network：
+docker run --network networkName imageName

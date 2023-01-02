@@ -16,13 +16,14 @@ services:
     ports:
       - "8080:8080"
     # Allow docker to connect to localhost
-    network_mode: "host"
+    # network_mode: "host"
     environment:
       # 最好使用此设定时区，其它镜像也可以使用，也可以用"TZ=Asia/Shanghai"
-      - "TZ=CST-8"
+      TZ: CST-8
       # # Memory / Heap Size
       # - JVM_MINIMUM_MEMORY=512M
       # - JVM_MAXIMUM_MEMORY=2048M
+      CATALINA_OPTS: -javaagent:/opt/atlassian/jira/atlassian-agent.jar
     # volumes:
     #   - type: bind
     #     source: ./jira-home
