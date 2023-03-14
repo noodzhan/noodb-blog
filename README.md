@@ -23,6 +23,7 @@
     marked 2.0.7
     mavon-editor 2.9.1
     nuxt 2.14.5
+    node 16.15
 
 ### 更新日志
 

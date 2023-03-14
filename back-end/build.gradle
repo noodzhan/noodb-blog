@@ -16,7 +16,13 @@ idea {
     }
 }
 
+sourceCompatibility = '11'
+targetCompatibility = '11'
+
 repositories {
+    maven{
+        url "https://maven.aliyun.com/nexus/content/groups/public/"
+    }
     mavenLocal()
     mavenCentral()
     gradlePluginPortal()
