@@ -128,12 +128,16 @@ export default {
           let level = tokens[idx].markup.split('#').length - 1;
           let content = tokens[idx + 1].content;
           if (content) {
+            if(level == 0){
+                level = 1;
+            }
             $vm.titles.push({
               id: index,
               title: content,
               level: level
             });
           }
+
           return '<h' + level + ' id="' + index++ + '">';
         };
         this.md = markdown.render(res.data.data.content);
