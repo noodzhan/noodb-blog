@@ -5,7 +5,6 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
-import org.apache.lucene.document.StringField;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexWriter;
@@ -15,11 +14,9 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.springframework.util.ClassUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileSystem;
 import java.nio.file.Path;
 
 public class LuceneManager implements LuceneService {
@@ -31,7 +28,7 @@ public class LuceneManager implements LuceneService {
         IndexWriter indexWriter = getIndexWriter();
         Document document = new Document();
         document.add(new TextField("content", article.getContent(), Field.Store.YES));
-        document.add(new StringField("title", article.getTitle(), Field.Store.YES));
+        document.add(new TextField("title", article.getTitle(), Field.Store.YES));
         try {
             indexWriter.addDocument(document);
             indexWriter.commit();

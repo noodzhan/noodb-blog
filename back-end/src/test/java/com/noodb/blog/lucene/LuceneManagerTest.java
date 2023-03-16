@@ -14,15 +14,14 @@ public class LuceneManagerTest {
     public void saveTest() {
         LuceneManager luceneManager = new LuceneManager();
         Article article = new Article();
-        article.setTitle("ceshi nihao woshi nibab");
+        article.setTitle("中国 nihao woshi nibab");
         article.setContent("中国你好ceshiceshi");
         luceneManager.save(article);
 
         Article article1 = new Article();
-        article1.setTitle("ceshi nihao2222");
+        article1.setTitle("中国 你好 我是 nihao2222");
         article1.setContent("中国你好ceshiceshi");
         luceneManager.save(article1);
-
 
     }
 
@@ -30,7 +29,7 @@ public class LuceneManagerTest {
     public void queryTest() throws ParseException {
         LuceneManager luceneManager = new LuceneManager();
         QueryParser queryParser = new QueryParser("title", new StandardAnalyzer());
-        TopDocs topDocs = luceneManager.query(queryParser.parse("ceshi"), 100);
+        TopDocs topDocs = luceneManager.query(queryParser.parse("中国"), 100);
         System.out.println(topDocs.totalHits.value);
     }
 
