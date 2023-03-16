@@ -38,7 +38,7 @@ spring:
 #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 logging:
   level:
-    root: debug
+    root: info
     com.noodb.blog.mapper: error
     com.noodb.blog: debug
 article:
