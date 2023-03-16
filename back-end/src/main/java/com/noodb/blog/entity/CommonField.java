@@ -1,5 +1,8 @@
 package com.noodb.blog.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+
 import java.util.Date;
 
 /**
@@ -12,18 +15,22 @@ public class CommonField {
     /**
      * 创建人
      */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long createBy;
     /**
      * 创建时间
      */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date createTime;
     /**
      * 修改人
      */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateBy;
     /**
      * 修改时间
      */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
 
     public CommonField() {
