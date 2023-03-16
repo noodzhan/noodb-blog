@@ -8,51 +8,102 @@
         <noodb-spin v-if="loading"></noodb-spin>
         <a-list item-layout="vertical" size="large" :data-source="blogs">
           <ul class="ant-pagination">
-            <li class="ant-pagination-item">
+            <li
+              class="ant-pagination-item"
+              :class="{ 'ant-pagination-disabled': current - 1 < 1 }"
+            >
               <a
                 class="page-link"
                 :href="prePageUrl"
                 aria-label="Previous"
                 target="_self"
+                :disabled="current - 1 < 1"
               >
                 <span aria-hidden="true">&laquo;</span>
               </a>
             </li>
-            <li class="ant-pagination-item">
-              <a class="page-link" :href="`/blog/page/${current - 2}`">{{
-                current - 2
-              }}</a>
+            <li
+              class="ant-pagination-item"
+              :class="{
+                'ant-pagination-disabled': current - 2 < 1,
+                hide: current - 2 < 0
+              }"
+            >
+              <a
+                class="page-link"
+                :href="`/blog/page/${current - 2}`"
+                :disabled="current - 2 < 1"
+                >{{ current - 2 }}</a
+              >
             </li>
-            <li class="ant-pagination-item">
-              <a class="page-link" :href="`/blog/page/${current - 1}`">{{
-                current - 1
-              }}</a>
+            <li
+              class="ant-pagination-item"
+              :class="{
+                'ant-pagination-disabled': current - 1 < 1,
+                hide: current - 1 < 0
+              }"
+            >
+              <a
+                class="page-link"
+                :href="`/blog/page/${current - 1}`"
+                :disabled="current - 1 < 1"
+                >{{ current - 1 }}</a
+              >
             </li>
+            <!-- 当前页 -->
             <li class="ant-pagination-item ant-pagination-item-active">
               <a class="page-link" :href="`/blog/page/${current}`">{{
                 current
               }}</a>
             </li>
-            <li class="ant-pagination-item">
-              <a class="page-link" :href="`/blog/page/${current + 1}`">{{
-                current + 1
-              }}</a>
+            <li
+              class="ant-pagination-item"
+              :class="{
+                'ant-pagination-disabled': current + 1 > pageCount,
+                hide: current + 1 > pageCount
+              }"
+            >
+              <a
+                class="page-link"
+                :href="`/blog/page/${current + 1}`"
+                :disabled="current + 1 > pageCount"
+                >{{ current + 1 }}</a
+              >
             </li>
-            <li class="ant-pagination-item">
-              <a class="page-link" :href="`/blog/page/${current + 1}`">{{
-                current + 2
-              }}</a>
+            <li
+              class="ant-pagination-item"
+              :class="{
+                'ant-pagination-disabled': current + 2 > pageCount,
+                hide: current + 2 > pageCount
+              }"
+            >
+              <a
+                class="page-link"
+                :href="`/blog/page/${current + 2}`"
+                :disabled="current + 2 > pageCount"
+                >{{ current + 2 }}</a
+              >
             </li>
-            <li class="ant-pagination-item">
-              <a class="page-link" :href="nextPageUrl" aria-label="Next">
+            <li
+              class="ant-pagination-item"
+              :class="{
+                'ant-pagination-disabled': current + 1 > pageCount
+              }"
+            >
+              <a
+                class="page-link"
+                :href="nextPageUrl"
+                aria-label="Next"
+                :disabled="current + 1 > pageCount"
+              >
                 <span aria-hidden="true">&raquo;</span>
               </a>
             </li>
             <li class="ant-pagination-options">
-              <!-- <span>跳到 </span> -->
               <div class="ant-pagination-options-quick-jumper">
-                跳转到
+                跳到
                 <a-input @keyup.enter="goto"></a-input>
+                页 ,共 {{ pageCount }} 页
               </div>
             </li>
           </ul>
@@ -136,7 +187,8 @@ export default {
       busy: false,
       api: null,
       blogs: [],
-      current: 1
+      current: 1,
+      pageCount: 0
     };
   },
   async fetch() {
@@ -155,6 +207,7 @@ export default {
       }
       this.loading = false;
       this.current = new Number(this.$router.currentRoute.params.pageNum);
+      this.pageCount = Math.ceil(this.total / this.pageSize);
     });
   },
   methods: {
@@ -169,23 +222,12 @@ export default {
     },
     goto(event) {
       let page = event.target.value;
+      if (page > this.pageCount) {
+        return;
+      }
       this.$router.push(`/blog/page/${page}`);
     },
-    readMore() {
-      const $vm = this;
-      this.api.getAllArticleSummary(this.pageNum + 1, this.pageSize, (res) => {
-        if (res.code === 0) {
-          if (res.data.records.length > 0) {
-            // Array.prototype.push.apply($vm.blogs, res.data.records)
-            $vm.blogs = $vm.blogs.concat(res.data.records);
-            this.pageNum++;
-            $vm.total = res.data.total;
-          } else {
-            $vm.$notification.warn({ message: '到底啦' });
-          }
-        }
-      });
-    },
+
     onHeadSearch(value) {
       // console.log(value)
       const $vm = this;
@@ -269,13 +311,13 @@ export default {
 .home-content {
   min-height: 80vh;
 }
-/* .pagination {
-  height: 50px;
+.ant-pagination {
+  /* margin-bottom: 20px; */
+  width: 500px;
+  margin: 20px auto;
+  margin-top: 0px;
 }
-.ant-pagination-item {
-  width: 50px;
-  height: 50px;
-  display: inline-block;
-  text-align: center;
-} */
+.hide {
+  display: none;
+}
 </style>
