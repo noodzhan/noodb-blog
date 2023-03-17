@@ -88,12 +88,12 @@ public class LuceneManager implements LuceneService {
         QueryParser queryParser = new MultiFieldQueryParser(searchField, new StandardAnalyzer());
         Query query = null;
         try {
-            query = queryParser.parse(queryParam.getKeyword());
+            query = queryParser.parse(queryParam.luceneQuery());
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
 
-        SimpleHTMLFormatter formatter = new SimpleHTMLFormatter();
+        SimpleHTMLFormatter formatter = new SimpleHTMLFormatter("<B style=\"color:red\">","</B>");
         DefaultEncoder encoder = new DefaultEncoder();
         QueryScorer scorer = new QueryScorer(query);
         Highlighter highlighter = new Highlighter(formatter, encoder, scorer);

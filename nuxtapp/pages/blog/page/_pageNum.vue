@@ -110,7 +110,7 @@
           <a-list-item slot="renderItem" slot-scope="item">
             <a-list-item-meta :description="item.summary">
               <a :href="`/blog/${item.id}`" slot="title">
-                {{ item.title }}
+              <span v-html="item.title"></span>      
               </a>
             </a-list-item-meta>
           </a-list-item>
@@ -232,13 +232,13 @@ export default {
       // console.log(value)
       const $vm = this;
       // 暂时搜索不支持分页。
-      this.api.getAllArticleSummary(
+      this.api.searchArticle(
         1,
         this.pageSize,
         (res) => {
           if (res.code === 0) {
-            $vm.blogs = res.data.records;
-            $vm.total = res.data.total;
+            $vm.blogs = res.data;
+            // $vm.total = res.data.total;
           }
           $vm.loading = false;
         },

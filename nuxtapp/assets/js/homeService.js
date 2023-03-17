@@ -21,4 +21,19 @@ export default class HomeService {
         callBack(res.data);
       });
   }
+
+  searchArticle(pageNum, pageSize, callBack, searchValue) {
+    this.$vm
+      .$http({
+        url: this.$vm.$appUrl + this.$vm.autoPrefix() + '/article/search',
+        method: 'POST',
+        data: {
+          keyword: searchValue
+        }
+      })
+      .then(res => {
+        callBack(res.data);
+      });
+  }
+
 }
