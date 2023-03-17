@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.noodb.blog.constant.NoodbConstant;
 import com.noodb.blog.entity.Article;
 import com.noodb.blog.entity.ArticleImages;
+import com.noodb.blog.entity.LuQueryParam;
+import com.noodb.blog.lucene.LuceneManager;
 import com.noodb.blog.service.ArticleImagesService;
 import com.noodb.blog.service.ArticleService;
 import com.noodb.blog.util.FileUtils;
@@ -30,6 +32,8 @@ import java.util.List;
 public class BlogController {
   @Autowired private ArticleService articleService;
   @Autowired private ArticleImagesService articleImagesService;
+  @Autowired
+  private LuceneManager luceneManager;
 
   @Value("${article.imagePath}")
   private String filePath;
@@ -67,6 +71,18 @@ public class BlogController {
   public R<Boolean> deleteArticleByIds(@RequestBody List<String> ids) {
     return R.success(articleService.removeByIds(ids));
   }
+
+    @PostMapping("/search")
+    public R<List<Article>> search(@RequestBody LuQueryParam luQueryParam) {
+        return R.success(luceneManager.search(luQueryParam));
+    }
+
+  @PostMapping("/createIndex")
+  public R<Boolean> createIndex() {
+    luceneManager.save(articleService.list());
+    return R.success(true);
+  }
+
 
   @PostMapping("/img")
   public R<UploadImageVO> uploadImage(

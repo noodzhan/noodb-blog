@@ -25,6 +25,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     web.ignoring()
         .antMatchers("/article/all/**")
         .antMatchers("/article/one/**")
+            .antMatchers("/article/search")
+            .antMatchers("/article/createIndex")
         .antMatchers("/user/login");
   }
 
