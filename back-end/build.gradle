@@ -20,7 +20,7 @@ sourceCompatibility = '11'
 targetCompatibility = '11'
 
 repositories {
-    maven{
+    maven {
         url "https://maven.aliyun.com/nexus/content/groups/public/"
     }
     mavenLocal()
@@ -45,6 +45,7 @@ dependencies {
     implementation group: 'org.apache.lucene', name: 'lucene-core', version: '9.0.0'
     implementation group: 'org.apache.lucene', name: 'lucene-analysis-common', version: '9.0.0'
     implementation group: 'org.apache.lucene', name: 'lucene-queryparser', version: '9.0.0'
+    implementation group: 'org.apache.lucene', name: 'lucene-highlighter', version: '9.0.0'
 
 
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2', 'io.jsonwebtoken:jjwt-jackson:0.11.2'
