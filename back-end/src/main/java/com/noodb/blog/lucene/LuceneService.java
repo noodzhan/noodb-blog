@@ -17,4 +17,5 @@ public interface LuceneService {
 
     List<Article> search(LuQueryParam query);
 
+  void deleteByIds(List<String> ids);
 }

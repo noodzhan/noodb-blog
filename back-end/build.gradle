@@ -45,6 +45,7 @@ dependencies {
     implementation group: 'org.apache.lucene', name: 'lucene-core', version: '9.0.0'
     implementation group: 'org.apache.lucene', name: 'lucene-analysis-common', version: '9.0.0'
     implementation group: 'org.apache.lucene', name: 'lucene-queryparser', version: '9.0.0'
+    implementation 'org.apache.lucene:lucene-highlighter:9.0.0'
 
 
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2', 'io.jsonwebtoken:jjwt-jackson:0.11.2'

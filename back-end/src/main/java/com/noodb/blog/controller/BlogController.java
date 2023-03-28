@@ -64,6 +64,7 @@ public class BlogController {
   public R<String> editOrInsertArticle(@RequestBody @Validated Article article) {
     article.setSummary(articleService.extractSummaryHandle(article.getContent()));
     articleService.saveOrUpdate(article);
+    luceneManager.save(article);
     return R.success(article.getId().toString());
   }
 

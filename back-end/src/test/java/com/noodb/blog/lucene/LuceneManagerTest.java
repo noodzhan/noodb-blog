@@ -1,6 +1,7 @@
 package com.noodb.blog.lucene;
 
 import com.noodb.blog.entity.Article;
+import java.io.IOException;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.cjk.CJKAnalyzer;
@@ -10,15 +11,9 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.search.*;
 import org.apache.lucene.search.highlight.*;
 import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
-
 
 public class LuceneManagerTest {
 
@@ -88,9 +83,6 @@ public class LuceneManagerTest {
             System.out.println("content:"+doc.getField("content").stringValue());
             ts.close();
         }
-
-
-
     }
 
 
