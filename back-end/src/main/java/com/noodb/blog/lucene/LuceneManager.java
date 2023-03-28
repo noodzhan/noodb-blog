@@ -196,7 +196,7 @@ public class LuceneManager implements LuceneService {
     LuceneManager luceneManager = new LuceneManager();
     QueryParser queryParser = new QueryParser("id", new StandardAnalyzer());
 
-    StringJoiner stringJoiner = new StringJoiner("OR");
+    StringJoiner stringJoiner = new StringJoiner(" OR ");
     ids.forEach(
         id -> {
           stringJoiner.add("id:" + id);
@@ -206,6 +206,7 @@ public class LuceneManager implements LuceneService {
       Query query = queryParser.parse("id:xxx OR id:xxx");
       luceneManager.getIndexWriter().deleteDocuments(query);
       luceneManager.getIndexWriter().commit();
+      luceneManager.getIndexWriter().close();
     } catch (IOException e) {
       throw new RuntimeException(e);
     } catch (ParseException e) {
@@ -220,7 +221,7 @@ public class LuceneManager implements LuceneService {
 
     QueryParser queryParser = new QueryParser("id", new StandardAnalyzer());
 
-    StringJoiner stringJoiner = new StringJoiner("OR");
+    StringJoiner stringJoiner = new StringJoiner(" OR ");
     ids.forEach(
         id -> {
           stringJoiner.add("id:" + id);

@@ -70,7 +70,9 @@ public class BlogController {
 
   @PostMapping("/delete")
   public R<Boolean> deleteArticleByIds(@RequestBody List<String> ids) {
-    return R.success(articleService.removeByIds(ids));
+    boolean b = articleService.removeByIds(ids);
+    luceneManager.deleteByIds(ids);
+    return R.success(b);
   }
 
     @PostMapping("/search")
