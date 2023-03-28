@@ -108,10 +108,11 @@
             </li>
           </ul>
           <a-list-item slot="renderItem" slot-scope="item">
-            <a-list-item-meta :description="item.summary">
+            <a-list-item-meta>
               <a :href="`/blog/${item.id}`" slot="title">
               <span v-html="item.title"></span>      
               </a>
+              <div class="ant-list-item-meta-description" v-html="item.summary" slot="description"></div>
             </a-list-item-meta>
           </a-list-item>
         </a-list>
