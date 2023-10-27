@@ -2,7 +2,8 @@
 
 ## 设计初衷
 
-开发该个人博客网站，主要是为了记录工作或学习中的，一些个人笔记，便于以后出现问题可以快速定位；设计初衷就是为了类似 wiki 一样，留下一些个人学习记录。以后有时间，查询改为全文检索。
+开发该个人博客网站，主要是为了记录工作或学习中的，一些个人笔记，便于以后出现问题可以快速定位；设计初衷就是为了类似
+wiki 一样，留下一些个人学习记录。以后有时间，查询改为全文检索。
 
 ## 总体预览
 
@@ -60,7 +61,6 @@
 1. 【新增】刷 leetcode 题目，自动同步到本博客。
 2. 【新增】支持gradle自动发release包。
 
-
 ### 需求
 
 #### 刷 leetcode 题目，自动同步到 noodb 个人博客。
@@ -99,8 +99,11 @@ npm run dev
 ```shell
 java -jar -Dspring.profiles.active=dev back-end.jar
 ```
+
 ## 发布
+
 在项目的根目录执行下面命令，会在产生release包。
+
 ```shell
 ./gradlew release
 ```
@@ -112,7 +115,6 @@ java -jar -Dspring.profiles.active=dev back-end.jar
 ```shell
 scp -i ~/.ssh/id_rsa -r /Users/noodzhan/IdeaProjects/noodb/front-end/dist ubuntu@1.15.231.74:/home/ubuntu/nblog/front-end
 ```
-
 
 ### 前端（使用服务端渲染nuxt）
 
@@ -157,6 +159,7 @@ lsof -i:3000
 ### 后台
 
 #### jar
+
 ```shell
 
 scp -i ~/.ssh/id_rsa /Users/noodzhan/IdeaProjects/noodb/back-end/build/libs/back-end-1.0.0.jar ubuntu@1.15.231.74:/home/ubuntu/nblog/noodb-blog-jar
@@ -181,6 +184,7 @@ nginx -t
 ```shell
 nginx -s reload
 ```
+
 #### 部署calibre
 
 1. 搜索
@@ -211,7 +215,9 @@ johngong/calibre-web
 
 #### 使用背景
 
-主要是 chrome 的 cookie 信息，来利用`https://github.com/wechatsync/Wechatsync`这个库来实现，一键 publish ，同步到各个博客网站。不符合后台同步博客的需求。
+主要是 chrome 的 cookie
+信息，来利用`https://github.com/wechatsync/Wechatsync`这个库来实现，一键
+publish ，同步到各个博客网站。不符合后台同步博客的需求。
 
 #### 开发环境整理
 
@@ -250,7 +256,6 @@ npm run serve
 
 ## 安全 (对接springSecurity)
 
-
 1、没有accessToken的请求，操作博客文档，进行拦截。暂时不做权限控制。
 
 2、登录接口颁发accessToken。
@@ -258,19 +263,3 @@ npm run serve
 3、实现一下这个过滤器。
 
 BearerTokenAuthenticationFilter
-
-## docker不同容器的网络问题
-1. 容器间要能相互通信，需要同在一个网络中。
-2. docker容器在创建时若不指定网络驱动时会默认归属到bridge网络。
-3. 使用 docker inspect 指令查看两个容器是否同属一个network，如果不是，使用docker network将两个容器连接起来，使他们在同一个网络network里即可。
-4. 查看docker 网络:
-docker network ls
-5. 首先创建一个网络：
-docker network create networkName
-6. 将容器连到创建的网络中（每个容器都要连到这个网络里）：
-docker network connect networkName containerName
-7. 查看网络内的容器信息：
-docker network inspect networkName
-8. 使用docker network --help 获取更多相关操作详情。
-9. 可以在运行容器时直接指定连接network：
-docker run --network networkName imageName
