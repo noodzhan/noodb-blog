@@ -64,12 +64,15 @@ public class BlogController {
   public R<String> editOrInsertArticle(@RequestBody @Validated Article article) {
     article.setSummary(articleService.extractSummaryHandle(article.getContent()));
     articleService.saveOrUpdate(article);
+    luceneManager.save(article);
     return R.success(article.getId().toString());
   }
 
   @PostMapping("/delete")
   public R<Boolean> deleteArticleByIds(@RequestBody List<String> ids) {
-    return R.success(articleService.removeByIds(ids));
+    boolean b = articleService.removeByIds(ids);
+    luceneManager.deleteByIds(ids);
+    return R.success(b);
   }
 
     @PostMapping("/search")

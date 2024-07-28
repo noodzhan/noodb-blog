@@ -8,3 +8,5 @@ nuxtapp/.nuxt
 temp/*
 back-end/bin/*
 /build
+/**/**/lucene_index
+/back-end/back-end.iml
